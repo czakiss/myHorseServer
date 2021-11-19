@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import model.GamerStud;
-//import model.GamerStud;
+
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ import model.GamerStud;
 
 public class HorseDataDto {
     private Integer horseId;
-    private GamerStud gamerStud;
+    //private GamerStud gamerStud;
     private String name; // imie konia
     private Breed breed; // rasa konia
     private double fast; // szybkość konia
