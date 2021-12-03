@@ -30,29 +30,29 @@ public class Gamer implements UserDetails, Serializable {
     private String nickname;
 
     @Column(name="points", nullable = false)
-    private Integer points;
+    private Integer points = 0;
 
-    @Column(name="last_login", nullable = false)
+    @Column(name="last_login", nullable = true)
     private Date lastLogin;
 
-    @Column(name="last_logout", nullable = false)
+    @Column(name="last_logout", nullable = true)
     private Date lastLogout;
 
     @Column(name="spend_time", nullable = false)
-    private Integer spendTime;
+    private Integer spendTime = 0;
 
    // @OneToOne
     //@JoinColumn(name="role_id")
     //private Role role;
 
-    @Column(name="loc_x", nullable = false)
-    private double loc_x;
+    @Column(name="loc_x", nullable = true)
+    private Double loc_x;
 
-    @Column(name="loc_y", nullable = false)
-    private double loc_y;
+    @Column(name="loc_y", nullable = true)
+    private Double loc_y;
 
-    @Column(name="loc_z", nullable = false)
-    private double loc_z;
+    @Column(name="loc_z", nullable = true)
+    private Double loc_z;
 
     @Column(name="email", nullable = false)
     private String email;

@@ -60,9 +60,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(4);
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
