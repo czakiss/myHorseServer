@@ -2,12 +2,15 @@ package com.example.myHorseServer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EnableJpaRepositories
 public class MyHorseServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyHorseServerApplication.class, args);
 	}
+	//.
 
 }
