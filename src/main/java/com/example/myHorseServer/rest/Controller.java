@@ -1,11 +1,13 @@
 package com.example.myHorseServer.rest;
 
 import com.example.myHorseServer.dto.LoginDto;
+import com.example.myHorseServer.dto.gamer.*;
 import com.example.myHorseServer.model.Gamer;
+import com.example.myHorseServer.model.Horse;
 import com.example.myHorseServer.security.JwtTokenUtil;
 import com.example.myHorseServer.service.GamerService;
-import com.example.myHorseServer.dto.gamer.GamerLoginDto;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.OnDelete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,16 @@ public class Controller {
     public ResponseEntity<?> username(@AuthenticationPrincipal Gamer gamer) {
         return ResponseEntity.ok().body(new LoginDto(gamer.getUsername()));
     }
+    @GetMapping(value="/getuser")
+        public ResponseEntity<?> usergetter(@AuthenticationPrincipal Gamer gamer){
+            return new ResponseEntity<>(gamer, HttpStatus.OK) ;
+        }
+  /*  @GetMapping(value = "/gethorse")
+        public ResponseEntity<?> horsegetter(AuthenticationPrincipal Horse horse){
+        return new ResponseEntity<>(horse)
+    }
+*/
+
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> loginGamer(@RequestBody GamerLoginDto dto){
@@ -54,7 +66,36 @@ public class Controller {
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
 
+    @PutMapping(value = "/changepassword")
+    public ResponseEntity<?> chanePassword(@RequestBody ChangePasswordDto dto){
+        System.out.println("zmiana hasla");
+        gamerService.changePassword(dto);
+        return ResponseEntity.ok().build();
+    }
 
+    @DeleteMapping(value = "/deleteuser/{email}")
+    public ResponseEntity<GamerDeleteResponse> deleteUser(@AuthenticationPrincipal Gamer gamer, @PathVariable String email) {
+        if(gamer.getRole().getRoleName().equalsIgnoreCase("admin")) {
+            return ResponseEntity.ok(gamerService.delete(email));
+        }
+        return ResponseEntity.badRequest().body(new GamerDeleteResponse(null, "Bląd"));
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/register")
+    public ResponseEntity<GamerRegisterResponse> registerRegister(@RequestBody GamerRegisterDto gamerRegisterDto) {
+        GamerRegisterResponse registrationResponse = gamerService.register(gamerRegisterDto);
+
+        System.out.println("--- User registration");
+
+        if (registrationResponse.getMessage().equals("egistration SUCCESSFULL")) {
+            return new ResponseEntity<>(registrationResponse, HttpStatus.OK);
+        } else if (registrationResponse.getMessage().equals("REGISTRATION FAILED")) {
+            return new ResponseEntity<>(registrationResponse, HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(registrationResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

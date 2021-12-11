@@ -41,9 +41,9 @@ public class Gamer implements UserDetails, Serializable {
     @Column(name="spend_time", nullable = false)
     private Integer spendTime;
 
-   // @OneToOne
-    //@JoinColumn(name="role_id")
-    //private Role role;
+    @OneToOne
+    @JoinColumn(name="role_id")
+    private Role role;
 
     @Column(name="loc_x", nullable = false)
     private double loc_x;

@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class GamerRegisterResponse {
-    //private GamerDataDto gamer;
+    private GamerDataDto gamer;
     private String message;
     //private GamerService.Register_Response registerResponse;
 }

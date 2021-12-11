@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class GamerDeleteResponse {
-    //private GamerDataDto gamer;
+    private GamerDataDto gamer;
     private String message;
     //private GamerService.Delete_Status deleteStatus;
 }

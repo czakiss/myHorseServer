@@ -8,6 +8,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class GamerDataDto {
     private Integer gamerId;
     private String nickname;
@@ -15,7 +16,7 @@ public class GamerDataDto {
     private Date lastLogin;
     private Date lastLogout;
     private Integer spendTime;
-    private Role role;
+    //private Role role;
     private double loc_x;
     private double loc_y;
     private double loc_z;
