@@ -90,7 +90,7 @@ public class Controller {
 
         System.out.println("--- User registration");
 
-        if (registrationResponse.getMessage().equals("egistration SUCCESSFULL")) {
+        if (registrationResponse.getMessage().equals("Registration SUCCESSFULL")) {
             return new ResponseEntity<>(registrationResponse, HttpStatus.OK);
         } else if (registrationResponse.getMessage().equals("REGISTRATION FAILED")) {
             return new ResponseEntity<>(registrationResponse, HttpStatus.CONFLICT);
