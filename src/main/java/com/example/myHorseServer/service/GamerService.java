@@ -56,6 +56,78 @@ public class GamerService implements UserDetailsService {
             throw new RuntimeException("Haslo zle");
     }
 
+    //TODO: sprawdzić changeRole, changeInformationGame, changeData
+    public void changeRole(ChangeGamerRole role){
+        Gamer gamer = gamerRepository.getGamerByEmail(role.getEmail()).orElseThrow(()-> new NotFoundException());
+        Gamer gamerToChange = gamerRepository.getGamerByEmail(role.getEmailGamerToChange()).orElseThrow(()-> new NotFoundException());//sprawdzenie czy nasz gracz któremu chcemy zmienić role istnieje w bazie
+        role.setAdminRole(gamer.getRole());
+        if(role.getAdminRole().equals("0")){
+            if(gamerToChange.getRole().equals(role.getNewRole())){
+                throw new RuntimeException("Gracz już otrzymał taką rolę");
+            }else {
+                gamerToChange.setRole(role.getNewRole());
+                gamerRepository.save(gamerToChange);
+                System.out.println("Nadano uprawnienia Admina");
+            }
+        }else throw new RuntimeException("Nie masz uprawnień do zmiany roli");
+    }
+
+    public void changeInformationGame(ChangeInformationGame informations){
+        Gamer gamer = gamerRepository.getGamerByEmail(informations.getEmial()).orElseThrow(()-> new NotFoundException());
+        if (!(informations.getLastLogin()).after(informations.getNewlastLogin()) ||
+                !(informations.getLastLogout()).after(informations.getNewlastLogout())){
+            gamer.setLastLogin(informations.getNewlastLogin());
+            gamer.setLastLogout(informations.getNewlastLogout());
+            informations.setNewspendTime((int) (informations.getNewlastLogout().getTime() - informations.getNewlastLogin().getTime()));
+            //TODO: sprawdzic poprawnosc zapisu daty i jej wyliczenia spedzonego czasu.
+            gamer.setSpendTime(informations.getSpendTime()+ informations.getNewspendTime());
+            gamerRepository.save(gamer);
+            System.out.println("zapisano czas");
+        }else throw new RuntimeException("Czas logowania bez zmian");
+    }
+
+    public void changePoints(ChangePointsDto points){
+        Gamer gamer = gamerRepository.getGamerByEmail(points.getEmial()).orElseThrow(()-> new NotFoundException());
+        if(!points.getNewPoints().equals(points.getPoints())){
+            gamer.setPoints(gamer.getPoints()+points.getNewPoints());
+            gamerRepository.save(gamer);
+        }else throw new RuntimeException("Punkty bez zmian");
+    }
+
+    public void changeGamerPosition(ChangeGamerPosition position){
+        Gamer gamer = gamerRepository.getGamerByEmail(position.getEmail()).orElseThrow(()-> new NotFoundException());
+        if(position.getLastLogout().after(gamer.getLastLogout())){
+            gamer.setLoc_x(position.getLoc_x());
+            gamer.setLoc_y(position.getLoc_y());
+            gamer.setLoc_z(position.getLoc_z());
+            gamerRepository.save(gamer);
+            System.out.println("Zapisano nową lokalizację");
+        } else throw new RuntimeException("Czas ostatniego logowania nie został poprawnie zapisany");
+    }
+
+    public void changeData(ChangeDataDto dto){
+        Gamer gamer = gamerRepository.getGamerByEmail(dto.getEmail()).orElseThrow(()-> new NotFoundException());
+        if(dto.getNewemail().isEmpty() && dto.getNewnickname().isEmpty()){
+                System.out.println("Brak zmian");
+                throw new RuntimeException("Brak zmian w email i nickname");
+        }else {
+            if(!dto.getNewemail().isEmpty()){
+            gamer.setEmail(dto.getNewemail());
+            gamerRepository.save(gamer);
+                System.out.println("Zmieniono email");
+        }else if(!dto.getNewnickname().isEmpty()){
+                gamer.setNickname(dto.getNewnickname());
+                gamerRepository.save(gamer);
+                System.out.println("Zmieniono nickname");
+            }else{
+                gamer.setEmail(dto.getNewemail());
+                gamer.setNickname(dto.getNewnickname());
+                gamerRepository.save(gamer);
+                System.out.println("Zmieniono email i nickname");
+            }
+        }
+    }
+
     public GamerDeleteResponse delete(String email) {
         Gamer deleted = gamerRepository.getGamerByEmail(email).orElseThrow(()-> new NotFoundException());
         gamerRepository.deleteById(deleted.getGamerId());
@@ -97,7 +169,7 @@ public class GamerService implements UserDetailsService {
                     null,
                     null,
                     0,
-                    // deleted.get().,
+                    //0,
                     0,
                     0,
                     0,

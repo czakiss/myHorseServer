@@ -68,12 +68,51 @@ public class Controller {
         }
     }
 
-    @PutMapping(value = "/changepassword")
+    //change
+
+    @PutMapping(value = "/gamer/changerole")
+    public ResponseEntity<?> changeRole(@RequestBody ChangeGamerRole role){
+        System.out.println("Zmiana roli użytkownika");
+        gamerService.changeRole(role);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value="/gamer/changeinformation")
+    public ResponseEntity<?> changeInformationGame(@RequestBody ChangeInformationGame information){
+        System.out.println("Zmiana informacji o grze -> logowanie, wylogowanie");
+        gamerService.changeInformationGame(information);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value="/gamer/changepoints")
+    public ResponseEntity<?> changePoints(@RequestBody ChangePointsDto points){
+        System.out.println("Zmiana informacji o grze -> punkty");
+        gamerService.changePoints(points);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value="/gamer/changeposition")
+    public ResponseEntity<?> changeGamerPosition(@RequestBody ChangeGamerPosition position){
+        System.out.println("Zmiana informacji o grze -> logowanie, wylogowanie");
+        gamerService.changeGamerPosition(position);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/gamer/changedata")
+    public ResponseEntity<?> changeData(@RequestBody ChangeDataDto dto){
+        System.out.println("zmiana danych użytkownika");
+        gamerService.changeData(dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/gamer/changepassword")
     public ResponseEntity<?> chanePassword(@RequestBody ChangePasswordDto dto){
         System.out.println("zmiana hasla");
         gamerService.changePassword(dto);
         return ResponseEntity.ok().build();
     }
+
+    //delete user
 
     @DeleteMapping(value = "/deleteuser/{email}")
     public ResponseEntity<GamerDeleteResponse> deleteUser(@AuthenticationPrincipal Gamer gamer, @PathVariable String email) {
@@ -82,6 +121,8 @@ public class Controller {
         }
         return ResponseEntity.badRequest().body(new GamerDeleteResponse(null, "Bląd"));
     }
+
+    //register
 
     @CrossOrigin
     @PostMapping(value = "/register")

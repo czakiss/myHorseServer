@@ -17,9 +17,11 @@ public class GamerDataDto {
     private Date lastLogout;
     private Integer spendTime;
     //private Role role;
+    //TODO: ustawić role !!!
     private double loc_x;
     private double loc_y;
     private double loc_z;
     private String email;
     private String password;
+
 }
