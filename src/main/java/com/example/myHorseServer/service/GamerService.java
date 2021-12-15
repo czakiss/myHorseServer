@@ -48,7 +48,7 @@ public class GamerService implements UserDetailsService {
     }
 
     public void changePassword(ChangePasswordDto dto) {
-        Gamer gamer = gamerRepository.getGamerByEmail(dto.getMail()).orElseThrow(()-> new NotFoundException());
+        Gamer gamer = gamerRepository.getGamerByEmail(dto.getEmail()).orElseThrow(()-> new NotFoundException());
         if(passwordEncoder.matches(dto.getOldPassword(), gamer.getPassword())) {
             gamer.setPassword(passwordEncoder.encode(dto.getNewPassword()));
             gamerRepository.save(gamer);

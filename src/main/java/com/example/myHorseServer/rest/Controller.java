@@ -45,7 +45,6 @@ public class Controller {
     }
 */
 
-
     @PostMapping(value = "/login")
     public ResponseEntity<?> loginGamer(@RequestBody GamerLoginDto dto){
         System.out.println("logowanie");
