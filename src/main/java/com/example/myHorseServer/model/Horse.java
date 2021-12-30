@@ -27,7 +27,7 @@ public class Horse {
     private String name; // imie konia
 
     @OneToOne
-   @JoinColumn(name = "breedId")
+    @JoinColumn(name = "breedId")
     private Breed breed; // rasa konia
 
     @Column(name="fast", nullable = false)
@@ -44,6 +44,5 @@ public class Horse {
 
     @Column(name="value", nullable = false)
     private double value;
-
-
+    
 }

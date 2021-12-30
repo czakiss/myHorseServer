@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -31,14 +30,14 @@ public class GamerService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     public boolean login(String email, String password) {
-        Gamer gto = gamerRepository.findByEmail(email).orElseThrow(() -> new NotFoundException());
+        Gamer gto = gamerRepository.findGamerByEmail(email).orElseThrow(() -> new NotFoundException());
         return gto.getEmail().equalsIgnoreCase(email) && gto.getPassword().equals(password);
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return gamerRepository
-                .findByEmail(email)
+                .findGamerByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(format("Gamer with emial - %s, not found", email))
                 );
     }
@@ -48,7 +47,7 @@ public class GamerService implements UserDetailsService {
     }
 
     public void changePassword(ChangePasswordDto dto) {
-        Gamer gamer = gamerRepository.getGamerByEmail(dto.getEmail()).orElseThrow(()-> new NotFoundException());
+        Gamer gamer = gamerRepository.findGamerByEmail(dto.getEmail()).orElseThrow(()-> new NotFoundException());
         if(passwordEncoder.matches(dto.getOldPassword(), gamer.getPassword())) {
             gamer.setPassword(passwordEncoder.encode(dto.getNewPassword()));
             gamerRepository.save(gamer);
@@ -58,8 +57,8 @@ public class GamerService implements UserDetailsService {
 
     //TODO: sprawdzić changeRole, changeInformationGame, changeData
     public void changeRole(ChangeGamerRole role){
-        Gamer gamer = gamerRepository.getGamerByEmail(role.getEmail()).orElseThrow(()-> new NotFoundException());
-        Gamer gamerToChange = gamerRepository.getGamerByEmail(role.getEmailGamerToChange()).orElseThrow(()-> new NotFoundException());//sprawdzenie czy nasz gracz któremu chcemy zmienić role istnieje w bazie
+        Gamer gamer = gamerRepository.findGamerByEmail(role.getEmail()).orElseThrow(()-> new NotFoundException());
+        Gamer gamerToChange = gamerRepository.findGamerByEmail(role.getEmailGamerToChange()).orElseThrow(()-> new NotFoundException());//sprawdzenie czy nasz gracz któremu chcemy zmienić role istnieje w bazie
         role.setAdminRole(gamer.getRole());
         if(role.getAdminRole().equals("0")){
             if(gamerToChange.getRole().equals(role.getNewRole())){
@@ -73,7 +72,7 @@ public class GamerService implements UserDetailsService {
     }
 
     public void changeInformationGame(ChangeInformationGame informations){
-        Gamer gamer = gamerRepository.getGamerByEmail(informations.getEmial()).orElseThrow(()-> new NotFoundException());
+        Gamer gamer = gamerRepository.findGamerByEmail(informations.getEmial()).orElseThrow(()-> new NotFoundException());
         if (!(informations.getLastLogin()).after(informations.getNewlastLogin()) ||
                 !(informations.getLastLogout()).after(informations.getNewlastLogout())){
             gamer.setLastLogin(informations.getNewlastLogin());
@@ -87,7 +86,7 @@ public class GamerService implements UserDetailsService {
     }
 
     public void changePoints(ChangePointsDto points){
-        Gamer gamer = gamerRepository.getGamerByEmail(points.getEmial()).orElseThrow(()-> new NotFoundException());
+        Gamer gamer = gamerRepository.findGamerByEmail(points.getEmial()).orElseThrow(()-> new NotFoundException());
         if(!points.getNewPoints().equals(points.getPoints())){
             gamer.setPoints(gamer.getPoints()+points.getNewPoints());
             gamerRepository.save(gamer);
@@ -95,7 +94,7 @@ public class GamerService implements UserDetailsService {
     }
 
     public void changeGamerPosition(ChangeGamerPosition position){
-        Gamer gamer = gamerRepository.getGamerByEmail(position.getEmail()).orElseThrow(()-> new NotFoundException());
+        Gamer gamer = gamerRepository.findGamerByEmail(position.getEmail()).orElseThrow(()-> new NotFoundException());
         if(position.getLastLogout().after(gamer.getLastLogout())){
             gamer.setLoc_x(position.getLoc_x());
             gamer.setLoc_y(position.getLoc_y());
@@ -106,7 +105,7 @@ public class GamerService implements UserDetailsService {
     }
 
     public void changeData(ChangeDataDto dto){
-        Gamer gamer = gamerRepository.getGamerByEmail(dto.getEmail()).orElseThrow(()-> new NotFoundException());
+        Gamer gamer = gamerRepository.findGamerByEmail(dto.getEmail()).orElseThrow(()-> new NotFoundException());
         if(dto.getNewemail().isEmpty() && dto.getNewnickname().isEmpty()){
                 System.out.println("Brak zmian");
                 throw new RuntimeException("Brak zmian w email i nickname");
@@ -129,7 +128,7 @@ public class GamerService implements UserDetailsService {
     }
 
     public GamerDeleteResponse delete(String email) {
-        Gamer deleted = gamerRepository.getGamerByEmail(email).orElseThrow(()-> new NotFoundException());
+        Gamer deleted = gamerRepository.findGamerByEmail(email).orElseThrow(()-> new NotFoundException());
         gamerRepository.deleteById(deleted.getGamerId());
 
             return new GamerDeleteResponse(new GamerDataDto(
@@ -148,7 +147,7 @@ public class GamerService implements UserDetailsService {
     }
 
     public GamerRegisterResponse register(GamerRegisterDto gamerRegisterDto){
-        if(gamerRepository.getGamerByEmail(gamerRegisterDto.getEmail()).isEmpty()){
+        if(gamerRepository.findGamerByEmail(gamerRegisterDto.getEmail()).isEmpty()){
             Gamer gamer = new Gamer();
             gamer.setEmail(gamerRegisterDto.getEmail());
             gamer.setPassword(passwordEncoder.encode(gamerRegisterDto.getPassword()));

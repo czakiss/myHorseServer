@@ -9,9 +9,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
-
-
-
 @Table(name = "gamer")
 @Data
 @NoArgsConstructor

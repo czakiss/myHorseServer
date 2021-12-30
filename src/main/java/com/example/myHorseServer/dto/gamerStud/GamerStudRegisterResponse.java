@@ -1,4 +1,4 @@
-package com.example.myHorseServer.dto.horse;
+package com.example.myHorseServer.dto.gamerStud;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class HorseDeleteDto {
-    private Integer horseId;
+public class GamerStudRegisterResponse {
+    private GamerStud gamerStudData;
+    private String message;
 }

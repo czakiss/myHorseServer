@@ -22,7 +22,7 @@ public class GamerStud {
 
     @OneToOne
     @JoinColumn(name = "gamerId")
-    private Gamer gamer;
+    private Gamer gamerId;
 
     @Column(name="name", nullable = false)
     private String name;

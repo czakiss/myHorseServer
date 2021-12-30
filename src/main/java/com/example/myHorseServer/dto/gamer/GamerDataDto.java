@@ -1,5 +1,4 @@
 package com.example.myHorseServer.dto.gamer;
-import com.example.myHorseServer.dto.role.Role;
 import lombok.*;
 
 import java.util.Date;
@@ -9,6 +8,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
 public class GamerDataDto {
     private Integer gamerId;
     private String nickname;

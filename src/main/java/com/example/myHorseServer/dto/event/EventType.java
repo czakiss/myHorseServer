@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class EventType {
-    private Integer id;
+    private Integer EventTypeId;
     private String name;
     private String description;
     private Integer pointsScored;

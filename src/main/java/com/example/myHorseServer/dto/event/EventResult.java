@@ -1,6 +1,6 @@
 package com.example.myHorseServer.dto.event;
 
-import com.example.myHorseServer.dto.horse.HorseDataDto;
+import com.example.myHorseServer.dto.horse.Horse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +13,6 @@ import lombok.Setter;
 
 public class EventResult {
     private Integer id;
-    private HorseDataDto horseId;
+    private Horse horseId;
     private Integer pointsScored;
 }
