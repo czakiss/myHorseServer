@@ -12,7 +12,7 @@ import lombok.Setter;
 
 public class EventType {
     private Integer EventTypeId;
-    private String name;
+    private String eventTypeName;
     private String description;
     private Integer pointsScored;
 }

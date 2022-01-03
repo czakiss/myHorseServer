@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "gamer_stud")
+@Table(name = "gamerStud")
 
 public class GamerStud {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class GamerStud {
     @JoinColumn(name = "gamerId")
     private Gamer gamerId;
 
-    @Column(name="name", nullable = false)
-    private String name;
+    @Column(name="gamerStudName", nullable = false)
+    private String gamerStudName;
 
 }

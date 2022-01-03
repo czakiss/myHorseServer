@@ -6,12 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class BreedResponse {
+public class BreedDeleteResponse {
     private Breed breed;
     private String message;
 }

@@ -1,7 +1,11 @@
 package com.example.myHorseServer.service;
 
+
 import com.example.myHorseServer.dto.event.*;
 import com.example.myHorseServer.exception.EventNotFoundException;
+import com.example.myHorseServer.model.Event;
+import com.example.myHorseServer.model.EventResult;
+import com.example.myHorseServer.model.EventType;
 import com.example.myHorseServer.repository.EventRepository;
 import com.example.myHorseServer.repository.EventResultRepository;
 import com.example.myHorseServer.repository.EventTypeRepository;
@@ -22,6 +26,7 @@ public class EventService {
     @Autowired
     private EventResultRepository eventResultRepository;
 
+
     public EventCreateResponse createEvent(Event event){
         Event creator = new Event();
         creator.setEventType(event.getEventType());
@@ -37,14 +42,14 @@ public class EventService {
 
     public EventTypeCreateResponse createEventType(EventType eventType){
         EventType creator = new EventType();
-        creator.setName(eventType.getName());
+        creator.setEventTypeName(eventType.getEventTypeName());
         creator.setDescription(eventType.getDescription());
         creator.setPointsScored(eventType.getPointsScored());
         creator = eventTypeRepository.save(creator);
 
         return new EventTypeCreateResponse(new EventType(
                creator.getEventTypeId(),
-                creator.getName(),
+                creator.getEventTypeName(),
                 creator.getDescription(),
                 creator.getPointsScored()
         ),"Create new event type - successfull");
@@ -57,10 +62,10 @@ public class EventService {
         creator = eventResultRepository.save(creator);
 
         return new EventResultCreateResponse(new EventResult(
-                creator.getId(),
+                creator.getEventResultId(),
                 creator.getHorseId(),
                 creator.getPointsScored()
-        ),"Create new event - successfull");
+        ),"Create new event result - successfull");
     }
 
     public Iterable<Event> findAllEvent(){
@@ -71,37 +76,30 @@ public class EventService {
         return eventTypeRepository.findAll();
     }
 
-    public Iterable<EventResult> eventResultRepository(){
+    public Iterable<EventResult> findAllEventResult(){
         return eventResultRepository.findAll();
     }
 
-    public Event loadEventById(Integer eventId){
-        return eventRepository.findEventById(eventId).orElseThrow(() -> new EventNotFoundException(format("Event with id - %s, not found", eventId))
+
+    public Event findEventById(Integer eventId){
+        return eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(format("Event with id - %s, not found", eventId))
         );
     }
 
-    public Event loadEventByName(String eventName){
-        return eventRepository.findEventByName(eventName).orElseThrow(()-> new EventNotFoundException(format("Event with name - s%, not found",eventName)));
-    }
-
     public EventType loadEventTypeById(Integer eventTypeId){
-        return eventTypeRepository.findEventTypeById(eventTypeId).orElseThrow(()-> new EventNotFoundException(format("Event type - %s, not found",eventTypeId)));
+        return eventTypeRepository.findByEventTypeId(eventTypeId).orElseThrow(()-> new EventNotFoundException(format("Event type - %s, not found",eventTypeId)));
     }
 
     public EventType loadEventTypeByName(String eventTypeName){
-        return eventTypeRepository.findEventTypeByName(eventTypeName).orElseThrow(()-> new EventNotFoundException(format("Event type - %s, not found",eventTypeName)));
+        return eventTypeRepository.findByEventTypeName(eventTypeName).orElseThrow(()-> new EventNotFoundException(format("Event type - %s, not found",eventTypeName)));
     }
 
     public EventResult loadEventResultById(Integer eventResultId){
-        return eventResultRepository.findEventResultById(eventResultId).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventResultId)));
-    }
-
-    public EventResult loadEventResultByName(String eventResultName){
-        return eventResultRepository.findEventResultByName(eventResultName).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventResultName)));
+        return eventResultRepository.findByEventResultId(eventResultId).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventResultId)));
     }
 
     public void changeEvent(Event eventChange){
-        Event event = eventRepository.findEventById(eventChange.getEventId()).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventChange.getEventType())));
+        Event event = eventRepository.findById(eventChange.getEventId()).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventChange.getEventType())));
        if(eventChange.getEventType()!=null || event.getDate()!=null){
            if (eventChange.getEventType()!=null){
                event.setEventType(eventChange.getEventType());
@@ -113,7 +111,7 @@ public class EventService {
     }
 
     public void chanegeEventResult(EventResult eventResultChange){
-        EventResult eventResult = eventResultRepository.findEventResultById(eventResultChange.getId()).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventResultChange.getId())));
+        EventResult eventResult = eventResultRepository.findByEventResultId(eventResultChange.getEventResultId()).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventResultChange.getEventResultId())));
 
         if (eventResultChange.getHorseId()!=null || eventResultChange.getHorseId() != eventResult.getHorseId() ){
             eventResult.setHorseId(eventResultChange.getHorseId());
@@ -125,11 +123,11 @@ public class EventService {
     }
 
     public void changeEventType(EventType eventTypeChange){
-        EventType eventType = eventTypeRepository.findEventTypeById(eventTypeChange.getEventTypeId()).orElseThrow(()->new EventNotFoundException(format("Event type - %s, not found",eventTypeChange.getName())));
+        EventType eventType = eventTypeRepository.findByEventTypeId(eventTypeChange.getEventTypeId()).orElseThrow(()->new EventNotFoundException(format("Event type - %s, not found",eventTypeChange.getEventTypeName())));
 
         if(!eventTypeChange.equals(eventType)){
-            if(!eventTypeChange.getName().equals(eventType.getName()) || eventTypeChange.getName()!=null){
-                eventType.setName(eventTypeChange.getName());
+            if(!eventTypeChange.getEventTypeName().equals(eventType.getEventTypeName()) || eventTypeChange.getEventTypeName()!=null){
+                eventType.setEventTypeName(eventTypeChange.getEventTypeName());
             }else throw new RuntimeException("Brak zmian w nazwie");
             if(!eventTypeChange.getPointsScored().equals(eventType.getPointsScored()) || eventTypeChange.getPointsScored()!=null){
                 eventType.setPointsScored(eventTypeChange.getPointsScored());
@@ -142,7 +140,7 @@ public class EventService {
     }
 
     public EventDeleteResponse deleteEvent(Integer eventId){
-        Event eventDelete = eventRepository.findEventById(eventId).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventId)));
+        Event eventDelete = eventRepository.findById(eventId).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventId)));
         eventRepository.deleteById(eventId);
 
         return new EventDeleteResponse(new Event(
@@ -153,23 +151,23 @@ public class EventService {
     }
 
     public EventTypeDeleteResponse deleteEventType(Integer eventTypeId){
-        EventType eventTypeDelete = eventTypeRepository.findEventTypeById(eventTypeId).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventTypeId)));
+        EventType eventTypeDelete = eventTypeRepository.findByEventTypeId(eventTypeId).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventTypeId)));
         eventTypeRepository.deleteById(eventTypeId);
 
         return new EventTypeDeleteResponse(new EventType(
                 eventTypeDelete.getEventTypeId(),
-                eventTypeDelete.getName(),
+                eventTypeDelete.getEventTypeName(),
                 eventTypeDelete.getDescription(),
                 eventTypeDelete.getPointsScored()
         ),"Deleted successfull");
     }
 
     public EventResultDeleteResponse deleteEventResult(Integer eventResultId){
-        EventResult eventResultDelete = eventResultRepository.findEventResultById(eventResultId).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventResultId)));
+        EventResult eventResultDelete = eventResultRepository.findByEventResultId(eventResultId).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventResultId)));
         eventResultRepository.deleteById(eventResultId);
 
         return new EventResultDeleteResponse(new EventResult(
-                eventResultDelete.getId(),
+                eventResultDelete.getEventResultId(),
                 eventResultDelete.getHorseId(),
                 eventResultDelete.getPointsScored()
         ),"Deleted successfull");

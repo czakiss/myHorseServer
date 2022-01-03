@@ -21,8 +21,8 @@ public class EventType {
     @Column(name="eventTypeId", nullable = false, unique=true)
     private Integer eventTypeId;
 
-    @Column(name="name", nullable = false)
-    private String name;
+    @Column(name="eventTypeName", nullable = false)
+    private String eventTypeName;
 
     @Column(name="description", nullable = false)
     private String description;

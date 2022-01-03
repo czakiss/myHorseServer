@@ -18,7 +18,6 @@ import java.io.IOException;
 
 import static java.util.List.of;
 import static java.util.Optional.ofNullable;
-import static org.springframework.util.StringUtils.isEmpty;
 
 @Component
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     FilterChain chain) throws ServletException, IOException {
         // Get authorization header and validate
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (isEmpty(header) || !header.startsWith("Bearer ")) {
+        if (header.isEmpty() || !header.startsWith("Bearer ")) {
             chain.doFilter(request, response);
             return;
         }
@@ -47,7 +46,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         // Get user identity and set it on the spring security context
         UserDetails userDetails = userRepo
-                .findGamerByEmail(jwtTokenUtil.getEmail(token))
+                .findByGamerEmail(jwtTokenUtil.getEmail(token))
                 .orElse(null);
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

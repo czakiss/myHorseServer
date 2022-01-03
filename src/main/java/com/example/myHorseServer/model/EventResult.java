@@ -19,7 +19,7 @@ public class EventResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name="eventResultId", nullable = false, unique=true)
-    private Integer id;
+    private Integer eventResultId;
 
     @ManyToOne
     private Horse horseId;

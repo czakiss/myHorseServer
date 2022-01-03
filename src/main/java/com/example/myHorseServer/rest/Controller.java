@@ -3,11 +3,9 @@ package com.example.myHorseServer.rest;
 import com.example.myHorseServer.dto.LoginDto;
 import com.example.myHorseServer.dto.gamer.*;
 import com.example.myHorseServer.model.Gamer;
-import com.example.myHorseServer.model.Horse;
 import com.example.myHorseServer.security.JwtTokenUtil;
 import com.example.myHorseServer.service.GamerService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.OnDelete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -39,11 +37,6 @@ public class Controller {
         public ResponseEntity<?> usergetter(@AuthenticationPrincipal Gamer gamer){
             return new ResponseEntity<>(gamer, HttpStatus.OK) ;
         }
-  /*  @GetMapping(value = "/gethorse")
-        public ResponseEntity<?> horsegetter(AuthenticationPrincipal Horse horse){
-        return new ResponseEntity<>(horse)
-    }
-*/
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> loginGamer(@RequestBody GamerLoginDto dto){

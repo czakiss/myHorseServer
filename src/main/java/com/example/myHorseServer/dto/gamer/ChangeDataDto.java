@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 
 public class ChangeDataDto {
-    private String email;
+    private String gamerEmail;
     private String newemail;
     private String newnickname;
     private String nickname;

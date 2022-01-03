@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class EventResult {
-    private Integer id;
+    private Integer eventResultId;
     private Horse horseId;
     private Integer pointsScored;
 }

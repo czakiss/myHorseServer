@@ -15,5 +15,5 @@ import lombok.Setter;
 public class GamerStud {
     private  Integer gamerStudId;
     private GamerDataDto gamerId;
-    private String name;
+    private String gamerStudName;
 }

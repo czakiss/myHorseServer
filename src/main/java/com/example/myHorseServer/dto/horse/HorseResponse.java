@@ -1,5 +1,6 @@
 package com.example.myHorseServer.dto.horse;
 
+import com.example.myHorseServer.model.Horse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -21,7 +21,7 @@ public class GamerDataDto {
     private double loc_x;
     private double loc_y;
     private double loc_z;
-    private String email;
+    private String gamerEmail;
     private String password;
 
 }

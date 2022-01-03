@@ -1,5 +1,6 @@
 package com.example.myHorseServer.dto.gamerStud;
 
+import com.example.myHorseServer.model.GamerStud;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.example.myHorseServer.repository;
 
-import com.example.myHorseServer.dto.horse.Breed;
+import com.example.myHorseServer.model.Breed;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,8 +11,6 @@ import java.util.Optional;
 public interface BreedRepository extends JpaRepository<Breed, Integer> {
 
     @Cacheable
-    Optional<Breed> findBreedById(Integer breedId);
+    Optional<Breed> findByBreedId(Integer breedId);
 
-    @Cacheable
-    Optional<Breed> findBreedByName(String breedName);
 }

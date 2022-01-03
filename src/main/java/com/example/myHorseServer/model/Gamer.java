@@ -52,7 +52,7 @@ public class Gamer implements UserDetails, Serializable {
     private double loc_z;
 
     @Column(name="email", nullable = false)
-    private String email;
+    private String gamerEmail;
 
     @Column(name="password", nullable = false)
     private String password;
