@@ -9,9 +9,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
-
-
-
 @Table(name = "gamer")
 @Data
 @NoArgsConstructor
@@ -41,9 +38,9 @@ public class Gamer implements UserDetails, Serializable {
     @Column(name="spend_time", nullable = false)
     private Integer spendTime = 0;
 
-   // @OneToOne
-    //@JoinColumn(name="role_id")
-    //private Role role;
+    @OneToOne
+    @JoinColumn(name="role_id")
+    private Role role;
 
     @Column(name="loc_x", nullable = true)
     private Double loc_x;
@@ -55,7 +52,7 @@ public class Gamer implements UserDetails, Serializable {
     private Double loc_z;
 
     @Column(name="email", nullable = false)
-    private String email;
+    private String gamerEmail;
 
     @Column(name="password", nullable = false)
     private String password;
