@@ -20,9 +20,9 @@ public class GamerStudService {
     private GamerRepository gamerRepository;
 
     public GamerStudRegisterResponse gamerStudNew(GamerStud gamerStud){
-        if(!gamerRepository.findByGamerEmail(gamerStud.getGamerId().getGamerEmail()).isEmpty()){
+        if(!gamerRepository.findByGamerEmail(gamerStud.getGamerId().getGamerEmail()).isPresent()){
             GamerStud gamerStudNew = new GamerStud();
-            gamerStudNew.setGamerStudId(gamerStud.getGamerId().getGamerId());
+            gamerStudNew.setGamerId(gamerStud.getGamerId());
             gamerStudNew.setGamerStudName(gamerStud.getGamerStudName());
             gamerStudNew = gamerStudRepository.save(gamerStudNew);
             return new GamerStudRegisterResponse(new GamerStud(
@@ -30,7 +30,7 @@ public class GamerStudService {
                     gamerStudNew.getGamerId(),
                     gamerStudNew.getGamerStudName()
             ),"New gamer stud created successfull");
-        }return new GamerStudRegisterResponse(null, "not found gamer");
+        }return new GamerStudRegisterResponse(null, "Gamer not found");
     }
 
     public Iterable<GamerStud> findAll(){
@@ -45,21 +45,21 @@ public class GamerStudService {
 
     public void editGamerStud(GamerStud gamerStudChange){
         GamerStud gamerStud = gamerStudRepository.findByGamerStudId(gamerStudChange.getGamerStudId())
-                .orElseThrow(()->new GamerStudNotFound(format("Nie znaleziono stadniny o id - %s",gamerStudChange.getGamerStudId())));
+                .orElseThrow(()->new GamerStudNotFound(format("Not found stud with id - %s",gamerStudChange.getGamerStudId())));
         if(!gamerStudChange.equals(gamerStud)){
             if(!gamerStudChange.getGamerId().equals(gamerStud.getGamerId()) || gamerStudChange!=null){
                 gamerStud.setGamerId(gamerStudChange.getGamerId());
-            }else throw new RuntimeException("Gracz nie został zmieniony");
+            }else throw new RuntimeException("Gamer was not found");
             if(!gamerStudChange.getGamerStudName().equals(gamerStud.getGamerStudName()) || gamerStudChange.getGamerStudName()!=null){
                 gamerStud.setGamerStudName(gamerStudChange.getGamerStudName());
-            }else throw new RuntimeException("Nazwa nie została zmieniona");
-        }else throw new RuntimeException("Brak zmian");
+            }else throw new RuntimeException("Name not change");
+        }else throw new RuntimeException("No changes");
         gamerStudRepository.save(gamerStud);
     }
 
     public GamerStudDeleteResponse deleteGamerStud(Integer gamerStudId){
         GamerStud gamerStudDelete = gamerStudRepository.findByGamerStudId(gamerStudId)
-                .orElseThrow(()->new GamerStudNotFound(format("Nie znaleziono stadniny o id - %s",gamerStudId)));
+                .orElseThrow(()->new GamerStudNotFound(format("Not found stud with id - %s",gamerStudId)));
         gamerStudRepository.findByGamerStudId(gamerStudDelete.getGamerStudId());
 
         return new GamerStudDeleteResponse(new GamerStud(

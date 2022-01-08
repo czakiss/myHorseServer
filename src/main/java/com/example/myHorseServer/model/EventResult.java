@@ -12,19 +12,19 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "eventResult")
+@Table(name = "event_result")
 
 public class EventResult {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name="eventResultId", nullable = false, unique=true)
+    @Column(name="event_result_id", nullable = false, unique=true)
     private Integer eventResultId;
 
     @ManyToOne
     private Horse horseId;
 
-    @Column(name="pointsScored", nullable = false)
+    @Column(name="points_scored", nullable = false)
     private Integer pointsScored;
 
 

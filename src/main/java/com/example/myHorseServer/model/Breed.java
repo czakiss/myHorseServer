@@ -20,10 +20,10 @@ public class Breed {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name="breedId", nullable = false, unique=true)
+    @Column(name="breed_id", nullable = false, unique=true)
     private Integer breedId;
 
-    @Column(name="horseBreed", nullable = false)
+    @Column(name="horse_breed", nullable = false)
     private HorseBreed horseBreed;
 
     @Column(name="fast", nullable = false)

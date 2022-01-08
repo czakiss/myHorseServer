@@ -12,5 +12,4 @@ public interface BreedRepository extends JpaRepository<Breed, Integer> {
 
     @Cacheable
     Optional<Breed> findByBreedId(Integer breedId);
-
 }

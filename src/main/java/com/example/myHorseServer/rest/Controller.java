@@ -64,42 +64,42 @@ public class Controller {
 
     @PutMapping(value = "/gamer/changerole")
     public ResponseEntity<?> changeRole(@RequestBody ChangeGamerRole role){
-        System.out.println("Zmiana roli użytkownika");
+        System.out.println("Change gamer role");
         gamerService.changeRole(role);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping(value="/gamer/changeinformation")
     public ResponseEntity<?> changeInformationGame(@RequestBody ChangeInformationGame information){
-        System.out.println("Zmiana informacji o grze -> logowanie, wylogowanie");
+        System.out.println("Change game information  -> login, logout");
         gamerService.changeInformationGame(information);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping(value="/gamer/changepoints")
     public ResponseEntity<?> changePoints(@RequestBody ChangePointsDto points){
-        System.out.println("Zmiana informacji o grze -> punkty");
+        System.out.println("hange game information -> points");
         gamerService.changePoints(points);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping(value="/gamer/changeposition")
     public ResponseEntity<?> changeGamerPosition(@RequestBody ChangeGamerPosition position){
-        System.out.println("Zmiana informacji o grze -> logowanie, wylogowanie");
+        System.out.println("hange game information -> login, logout");
         gamerService.changeGamerPosition(position);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping(value = "/gamer/changedata")
     public ResponseEntity<?> changeData(@RequestBody ChangeDataDto dto){
-        System.out.println("zmiana danych użytkownika");
+        System.out.println("Change gamer datas");
         gamerService.changeData(dto);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping(value = "/gamer/changepassword")
     public ResponseEntity<?> chanePassword(@RequestBody ChangePasswordDto dto){
-        System.out.println("zmiana hasla");
+        System.out.println("Change password");
         gamerService.changePassword(dto);
         return ResponseEntity.ok().build();
     }
@@ -111,7 +111,7 @@ public class Controller {
         if(gamer.getRole().getRoleName().equalsIgnoreCase("admin")) {
             return ResponseEntity.ok(gamerService.delete(email));
         }
-        return ResponseEntity.badRequest().body(new GamerDeleteResponse(null, "Bląd"));
+        return ResponseEntity.badRequest().body(new GamerDeleteResponse(null, "Error"));
     }
 
     //register

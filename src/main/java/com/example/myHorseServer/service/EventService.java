@@ -119,7 +119,7 @@ public class EventService {
         }else if(eventResultChange.getPointsScored()!=null || eventResultChange.getPointsScored()!=eventResult.getPointsScored()){
             eventResult.setPointsScored(eventResultChange.getPointsScored());
             eventResultRepository.save(eventResult);
-        }else throw new RuntimeException("Brak zmian");
+        }else throw new RuntimeException("No changes");
     }
 
     public void changeEventType(EventType eventTypeChange){
@@ -128,14 +128,14 @@ public class EventService {
         if(!eventTypeChange.equals(eventType)){
             if(!eventTypeChange.getEventTypeName().equals(eventType.getEventTypeName()) || eventTypeChange.getEventTypeName()!=null){
                 eventType.setEventTypeName(eventTypeChange.getEventTypeName());
-            }else throw new RuntimeException("Brak zmian w nazwie");
+            }else throw new RuntimeException("No changes in name");
             if(!eventTypeChange.getPointsScored().equals(eventType.getPointsScored()) || eventTypeChange.getPointsScored()!=null){
                 eventType.setPointsScored(eventTypeChange.getPointsScored());
-            }else throw new RuntimeException("Brak zmian w punktach");
+            }else throw new RuntimeException("No changes in points");
             if(!eventTypeChange.getDescription().equals(eventType.getDescription()) || eventTypeChange.getDescription()!=null){
                 eventType.setDescription(eventTypeChange.getDescription());
-            }else throw new RuntimeException("Brak zmian w opisie");
-        }else throw new RuntimeException("Brak zmian w typie wydarzenia");
+            }else throw new RuntimeException("No changes in description");
+        }else throw new RuntimeException("No changes in event type");
         eventTypeRepository.save(eventType);
     }
 
@@ -147,7 +147,7 @@ public class EventService {
                 eventDelete.getEventId(),
                 eventDelete.getEventType(),
                 eventDelete.getDate()
-        ),"Deleted successfull");
+        ),"Deleted event successfull");
     }
 
     public EventTypeDeleteResponse deleteEventType(Integer eventTypeId){
@@ -159,7 +159,7 @@ public class EventService {
                 eventTypeDelete.getEventTypeName(),
                 eventTypeDelete.getDescription(),
                 eventTypeDelete.getPointsScored()
-        ),"Deleted successfull");
+        ),"Deleted event type successfull");
     }
 
     public EventResultDeleteResponse deleteEventResult(Integer eventResultId){
@@ -170,6 +170,6 @@ public class EventService {
                 eventResultDelete.getEventResultId(),
                 eventResultDelete.getHorseId(),
                 eventResultDelete.getPointsScored()
-        ),"Deleted successfull");
+        ),"Deleted event results successfull");
     }
 }
