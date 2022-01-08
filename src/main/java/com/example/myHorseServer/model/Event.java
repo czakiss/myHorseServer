@@ -19,10 +19,10 @@ public class Event{
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name="eventId", nullable = false, unique=true)
+    @Column(name="event_id", nullable = false, unique=true)
     private Integer eventId;
 
-    @Column(name="eventType", nullable = false)
+    @Column(name="event_type", nullable = false)
     private Integer eventType;
 
     @Column(name="date", nullable = false)

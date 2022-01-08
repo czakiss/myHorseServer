@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Horse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name="horseId", nullable = false, unique=true)
+    @Column(name="horse_id", nullable = false, unique=true)
     private Integer horseId;
 
     @ManyToOne

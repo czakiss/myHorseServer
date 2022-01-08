@@ -52,7 +52,7 @@ public class GamerService implements UserDetailsService {
             gamer.setPassword(passwordEncoder.encode(dto.getNewPassword()));
             gamerRepository.save(gamer);
         } else
-            throw new RuntimeException("Haslo zle");
+            throw new RuntimeException("Incorrect password");
     }
 
     //TODO: sprawdzić changeRole, changeInformationGame, changeData
@@ -62,13 +62,13 @@ public class GamerService implements UserDetailsService {
         role.setAdminRole(gamer.getRole());
         if(role.getAdminRole().equals("0")){
             if(gamerToChange.getRole().equals(role.getNewRole())){
-                throw new RuntimeException("Gracz już otrzymał taką rolę");
+                throw new RuntimeException("The player has already been given such a role");
             }else {
                 gamerToChange.setRole(role.getNewRole());
                 gamerRepository.save(gamerToChange);
-                System.out.println("Nadano uprawnienia Admina");
+                System.out.println("Admin powers granted");
             }
-        }else throw new RuntimeException("Nie masz uprawnień do zmiany roli");
+        }else throw new RuntimeException("You are not authorized to change the role");
     }
 
     public void changeInformationGame(ChangeInformationGame informations){
@@ -81,8 +81,8 @@ public class GamerService implements UserDetailsService {
             //TODO: sprawdzic poprawnosc zapisu daty i jej wyliczenia spedzonego czasu.
             gamer.setSpendTime(informations.getSpendTime()+ informations.getNewspendTime());
             gamerRepository.save(gamer);
-            System.out.println("zapisano czas");
-        }else throw new RuntimeException("Czas logowania bez zmian");
+            System.out.println("Time was saved");
+        }else throw new RuntimeException("Login time unchanged");
     }
 
     public void changePoints(ChangePointsDto points){
@@ -90,7 +90,7 @@ public class GamerService implements UserDetailsService {
         if(!points.getNewPoints().equals(points.getPoints())){
             gamer.setPoints(gamer.getPoints()+points.getNewPoints());
             gamerRepository.save(gamer);
-        }else throw new RuntimeException("Punkty bez zmian");
+        }else throw new RuntimeException("Points unchanged");
     }
 
     public void changeGamerPosition(ChangeGamerPosition position){
@@ -100,29 +100,29 @@ public class GamerService implements UserDetailsService {
             gamer.setLoc_y(position.getLoc_y());
             gamer.setLoc_z(position.getLoc_z());
             gamerRepository.save(gamer);
-            System.out.println("Zapisano nową lokalizację");
-        } else throw new RuntimeException("Czas ostatniego logowania nie został poprawnie zapisany");
+            System.out.println("A new location has been saved");
+        } else throw new RuntimeException("The last login time was not saved correctly");
     }
 
     public void changeData(ChangeDataDto dto){
         Gamer gamer = gamerRepository.findByGamerEmail(dto.getGamerEmail()).orElseThrow(()-> new NotFoundException());
         if(dto.getNewemail().isEmpty() && dto.getNewnickname().isEmpty()){
-                System.out.println("Brak zmian");
-                throw new RuntimeException("Brak zmian w email i nickname");
+                System.out.println("No changes");
+                throw new RuntimeException("No changes to email or nickname");
         }else {
             if(!dto.getNewemail().isEmpty()){
             gamer.setGamerEmail(dto.getNewemail());
             gamerRepository.save(gamer);
-                System.out.println("Zmieniono email");
+                System.out.println("Change email");
         }else if(!dto.getNewnickname().isEmpty()){
                 gamer.setNickname(dto.getNewnickname());
                 gamerRepository.save(gamer);
-                System.out.println("Zmieniono nickname");
+                System.out.println("Change nickname");
             }else{
                 gamer.setGamerEmail(dto.getNewemail());
                 gamer.setNickname(dto.getNewnickname());
                 gamerRepository.save(gamer);
-                System.out.println("Zmieniono email i nickname");
+                System.out.println("Change email and nickname");
             }
         }
     }

@@ -13,7 +13,4 @@ public interface HorseRepository extends JpaRepository<Horse, Integer> {
 
     @Cacheable
     Optional<Horse> findByHorseId(Integer horseId);
-
-/*    @Cacheable
-    Optional<Horse> findByGamerId(Integer gamerId);*/
 }
