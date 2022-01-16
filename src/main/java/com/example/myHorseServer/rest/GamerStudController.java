@@ -49,10 +49,8 @@ public class GamerStudController {
     public ResponseEntity<GamerStudRegisterResponse> gamerStudNew(@AuthenticationPrincipal Gamer gamer, @RequestBody GamerStud gamerStud){
         GamerStudRegisterResponse gamerStudRegisterResponse = gamerStudService.gamerStudNew(gamerStud);
         System.out.println("--- New event created ---");
-        if(gamer.getRole().getRoleName().equalsIgnoreCase("admin")) {
-            if (gamerStudRegisterResponse.getMessage().equals("New gamer stud created successfull")) {
-                return new ResponseEntity<>(gamerStudRegisterResponse, HttpStatus.OK);
-            } else return new ResponseEntity<>(gamerStudRegisterResponse, HttpStatus.BAD_REQUEST);
-        }else return (ResponseEntity<GamerStudRegisterResponse>) ResponseEntity.status(HttpStatus.FORBIDDEN);
+        if (gamerStudRegisterResponse.getMessage().equals("New gamer stud created successfull")) {
+            return new ResponseEntity<>(gamerStudRegisterResponse, HttpStatus.OK);
+        } else return new ResponseEntity<>(gamerStudRegisterResponse, HttpStatus.BAD_REQUEST);
     }
 }

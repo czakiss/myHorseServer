@@ -22,8 +22,9 @@ public class Event{
     @Column(name="event_id", nullable = false, unique=true)
     private Integer eventId;
 
-    @Column(name="event_type", nullable = false)
-    private Integer eventType;
+    @ManyToOne
+    @JoinColumn(name = "event_type")
+    private EventType eventType;
 
     @Column(name="date", nullable = false)
     private Date date;

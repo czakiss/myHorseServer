@@ -20,7 +20,7 @@ public class GamerStudService {
     private GamerRepository gamerRepository;
 
     public GamerStudRegisterResponse gamerStudNew(GamerStud gamerStud){
-        if(!gamerRepository.findByGamerEmail(gamerStud.getGamerId().getGamerEmail()).isPresent()){
+        if(gamerRepository.findByGamerEmail(gamerStud.getGamerId().getGamerEmail()).isPresent()){
             GamerStud gamerStudNew = new GamerStud();
             gamerStudNew.setGamerId(gamerStud.getGamerId());
             gamerStudNew.setGamerStudName(gamerStud.getGamerStudName());
