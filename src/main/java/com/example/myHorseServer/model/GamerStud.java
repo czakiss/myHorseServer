@@ -1,9 +1,6 @@
 package com.example.myHorseServer.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "gamer_stud")
-
+@ToString
 public class GamerStud {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

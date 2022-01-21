@@ -63,6 +63,7 @@ public class EventService {
 
         return new EventResultCreateResponse(new EventResult(
                 creator.getEventResultId(),
+                creator.getEventId(),
                 creator.getHorseId(),
                 creator.getPointsScored()
         ),"Create new event result - successfull");
@@ -168,8 +169,10 @@ public class EventService {
 
         return new EventResultDeleteResponse(new EventResult(
                 eventResultDelete.getEventResultId(),
+                eventResultDelete.getEventId(),
                 eventResultDelete.getHorseId(),
                 eventResultDelete.getPointsScored()
-        ),"Deleted event results successfull");
+
+                ),"Deleted event results successfull");
     }
 }

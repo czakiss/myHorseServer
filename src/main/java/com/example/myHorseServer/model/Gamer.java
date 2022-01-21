@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
+@ToString
 
 public class Gamer implements UserDetails, Serializable {
 

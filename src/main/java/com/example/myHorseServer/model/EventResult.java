@@ -21,6 +21,10 @@ public class EventResult {
     @Column(name="event_result_id", nullable = false, unique=true)
     private Integer eventResultId;
 
+    @OneToOne
+    @JoinColumn(name = "event")
+    private Event eventId;
+
     @ManyToOne
     private Horse horseId;
 
