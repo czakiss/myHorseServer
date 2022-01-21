@@ -2,6 +2,7 @@ package com.example.myHorseServer.rest;
 
 import com.example.myHorseServer.dto.event.*;
 import com.example.myHorseServer.model.Event;
+import com.example.myHorseServer.model.EventList;
 import com.example.myHorseServer.model.EventResult;
 import com.example.myHorseServer.model.EventType;
 import com.example.myHorseServer.model.Gamer;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLOutput;
 
 @CrossOrigin("*")
 @RestController
@@ -60,6 +63,13 @@ public class EventController {
         return new ResponseEntity<EventResult>(eventService.loadEventResultById(eventResultId),HttpStatus.OK);
     }
 
+    @GetMapping(value = "eventlistid")
+    public ResponseEntity<Iterable<EventList>> getEventList(@RequestBody Integer eventListId){
+        System.out.println("Get event list by ID");
+        return new ResponseEntity<Iterable<EventList>>((Iterable<EventList>) eventService.findAllOfEventList(eventListId),HttpStatus.OK);
+    }
+
+
     @PutMapping(value = "/change/event" )
     public ResponseEntity<?> changeEvent(@AuthenticationPrincipal Gamer gamer,@RequestBody Event event){
         System.out.println("Change event");
@@ -85,11 +95,19 @@ public class EventController {
         }else return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.FORBIDDEN);
     }
     @DeleteMapping(value = "/delete/{eventid}")
-    public ResponseEntity<EventDeleteResponse> deleteEvent(@AuthenticationPrincipal Gamer gamer, @PathVariable Integer eventid) {
+    public ResponseEntity<EventDeleteResponse> deleteEventList(@AuthenticationPrincipal Gamer gamer, @PathVariable Integer eventid) {
         if(gamer.getRole().getRoleName().equalsIgnoreCase("admin")) {
             return ResponseEntity.ok(eventService.deleteEvent(eventid));
         }
         return ResponseEntity.badRequest().body(new EventDeleteResponse(null, "Forbidden"));
+    }
+
+    @DeleteMapping(value = "/delete/{eventlist}")
+    public ResponseEntity<EventListDeleteResponse> deleteEvent(@AuthenticationPrincipal Gamer gamer, @PathVariable Integer eventid) {
+        if(gamer.getRole().getRoleName().equalsIgnoreCase("admin")) {
+            return ResponseEntity.ok(eventService.deleteEventList(eventid));
+        }
+        return ResponseEntity.badRequest().body(new EventListDeleteResponse(null, "Forbidden"));
     }
 
     @DeleteMapping(value = "/delete/{eventtype}")
@@ -105,6 +123,16 @@ public class EventController {
             return ResponseEntity.ok(eventService.deleteEventResult(eventResultId));
         }
         return ResponseEntity.badRequest().body(new EventResultDeleteResponse(null, "Forbidden"));
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/new/eventlist")
+    public ResponseEntity<EventListCreateResponse> createEventList( @RequestBody EventList eventList){
+        EventListCreateResponse eventListCreateResponse = eventService.createEventList(eventList);
+        System.out.println("--- New event created ---");
+            if (eventListCreateResponse.getMessage().equals("Create new event list - succesfull")) {
+                return new ResponseEntity<>(eventListCreateResponse, HttpStatus.OK);
+            } else return new ResponseEntity<>(eventListCreateResponse, HttpStatus.BAD_REQUEST);
     }
 
     @CrossOrigin

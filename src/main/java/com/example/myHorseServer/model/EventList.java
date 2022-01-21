@@ -12,23 +12,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "event_result")
+@Table(name = "event_list")
 
-public class EventResult {
+public class EventList {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name="event_result_id", nullable = false, unique=true)
-    private Integer eventResultId;
+    @Column(name="event_list", nullable = false, unique=true)
+    private Integer eventListId;
 
     @OneToOne
-    @JoinColumn(name = "event")
-    private Event eventId;
+    private Horse horse;
 
     @ManyToOne
-    private Horse horseId;
-
-    @Column(name="points_scored", nullable = false)
-    private Integer pointsScored;
-
+    private Event event;
 }

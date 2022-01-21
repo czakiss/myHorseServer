@@ -4,13 +4,17 @@ package com.example.myHorseServer.service;
 import com.example.myHorseServer.dto.event.*;
 import com.example.myHorseServer.exception.EventNotFoundException;
 import com.example.myHorseServer.model.Event;
+import com.example.myHorseServer.model.EventList;
 import com.example.myHorseServer.model.EventResult;
 import com.example.myHorseServer.model.EventType;
+import com.example.myHorseServer.repository.EventListRepository;
 import com.example.myHorseServer.repository.EventRepository;
 import com.example.myHorseServer.repository.EventResultRepository;
 import com.example.myHorseServer.repository.EventTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 import static java.lang.String.format;
 
@@ -26,6 +30,9 @@ public class EventService {
     @Autowired
     private EventResultRepository eventResultRepository;
 
+    @Autowired
+    private EventListRepository eventListRepository;
+
 
     public EventCreateResponse createEvent(Event event){
         Event creator = new Event();
@@ -40,6 +47,17 @@ public class EventService {
         ),"Create new event - successfull");
     }
 
+    public EventListCreateResponse createEventList(EventList eventList){
+        EventList creator = new EventList();
+        creator.setEvent(eventList.getEvent());
+        creator.setHorse(eventList.getHorse());
+
+        return new EventListCreateResponse(new EventList(
+                creator.getEventListId(),
+                creator.getHorse(),
+                creator.getEvent()
+        ),"Create new event list - succesfull");
+    }
     public EventTypeCreateResponse createEventType(EventType eventType){
         EventType creator = new EventType();
         creator.setEventTypeName(eventType.getEventTypeName());
@@ -81,6 +99,9 @@ public class EventService {
         return eventResultRepository.findAll();
     }
 
+    public Iterable<EventList> findAllOfEventList(Integer eventListId){return  eventListRepository.findAllById(eventListId);}
+
+
 
     public Event findEventById(Integer eventId){
         return eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(format("Event with id - %s, not found", eventId))
@@ -97,6 +118,10 @@ public class EventService {
 
     public EventResult loadEventResultById(Integer eventResultId){
         return eventResultRepository.findByEventResultId(eventResultId).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventResultId)));
+    }
+
+    public EventList loadEventListById(Integer eventListId){
+        return eventListRepository.findByEventListId(eventListId).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventListId)));
     }
 
     public void changeEvent(Event eventChange){
@@ -173,6 +198,17 @@ public class EventService {
                 eventResultDelete.getHorseId(),
                 eventResultDelete.getPointsScored()
 
+                ),"Deleted event results successfull");
+    }
+
+    public EventListDeleteResponse deleteEventList(Integer eventlistid) {
+        EventList eventListDelete = eventListRepository.findByEventListId(eventlistid).orElseThrow(()-> new EventNotFoundException(format("Event result - %s, not found",eventlistid)));
+        eventListRepository.deleteById(eventlistid);
+
+        return new EventListDeleteResponse(new EventList(
+                eventListDelete.getEventListId(),
+                eventListDelete.getHorse(),
+                eventListDelete.getEvent()
                 ),"Deleted event results successfull");
     }
 }
