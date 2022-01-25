@@ -2,6 +2,7 @@ package com.example.myHorseServer.service;
 
 
 import com.example.myHorseServer.dto.event.*;
+import com.example.myHorseServer.dto.gamer.GamerRegisterResponse;
 import com.example.myHorseServer.exception.EventNotFoundException;
 import com.example.myHorseServer.model.Event;
 import com.example.myHorseServer.model.EventList;
@@ -15,11 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
 @Service
 public class EventService {
+
 
     @Autowired
     private EventRepository eventRepository;
@@ -49,13 +52,16 @@ public class EventService {
 
     public EventListCreateResponse createEventList(EventList eventList){
         EventList creator = new EventList();
+        creator.setEventListId(eventList.getEventListId());
         creator.setEvent(eventList.getEvent());
         creator.setHorse(eventList.getHorse());
-
+        creator.setGamer(eventList.getGamer());
+        creator = eventListRepository.save(creator);
         return new EventListCreateResponse(new EventList(
                 creator.getEventListId(),
                 creator.getHorse(),
-                creator.getEvent()
+                creator.getEvent(),
+                creator.getGamer()
         ),"Create new event list - succesfull");
     }
     public EventTypeCreateResponse createEventType(EventType eventType){
@@ -99,7 +105,11 @@ public class EventService {
         return eventResultRepository.findAll();
     }
 
-    public Iterable<EventList> findAllOfEventList(Integer eventListId){return  eventListRepository.findAllById(eventListId);}
+    public EventList findAllOfEventList(Integer eventListId){return  eventListRepository.findAllById(eventListId).orElse(null);}
+
+    public Iterable<EventList> findAllGamerEventList(Integer gamerListId){
+        return  eventListRepository.findAllByGamerId(gamerListId);
+    }
 
 
 
@@ -208,7 +218,8 @@ public class EventService {
         return new EventListDeleteResponse(new EventList(
                 eventListDelete.getEventListId(),
                 eventListDelete.getHorse(),
-                eventListDelete.getEvent()
+                eventListDelete.getEvent(),
+                eventListDelete.getGamer()
                 ),"Deleted event results successfull");
     }
 }

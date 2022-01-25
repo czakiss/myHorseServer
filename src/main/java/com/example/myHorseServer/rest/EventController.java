@@ -63,12 +63,17 @@ public class EventController {
         return new ResponseEntity<EventResult>(eventService.loadEventResultById(eventResultId),HttpStatus.OK);
     }
 
-    @GetMapping(value = "eventlistid")
-    public ResponseEntity<Iterable<EventList>> getEventList(@RequestBody Integer eventListId){
+    @GetMapping(value = "/eventlistid")
+    public ResponseEntity<?> getEventList(@RequestBody Integer eventListId){
         System.out.println("Get event list by ID");
-        return new ResponseEntity<Iterable<EventList>>((Iterable<EventList>) eventService.findAllOfEventList(eventListId),HttpStatus.OK);
+        return new ResponseEntity<>(eventService.findAllOfEventList(eventListId), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/get/eventlistgamer")
+    public ResponseEntity<Iterable<EventList>> getEventList(@AuthenticationPrincipal Gamer gamer){
+        System.out.println("Get event list by ID");
+        return new ResponseEntity<Iterable<EventList>>(eventService.findAllGamerEventList(gamer.getGamerId()), HttpStatus.OK);
+    }
 
     @PutMapping(value = "/change/event" )
     public ResponseEntity<?> changeEvent(@AuthenticationPrincipal Gamer gamer,@RequestBody Event event){
