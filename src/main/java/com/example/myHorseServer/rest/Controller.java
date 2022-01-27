@@ -1,10 +1,10 @@
 package com.example.myHorseServer.rest;
 
 import com.example.myHorseServer.dto.LoginDto;
+import com.example.myHorseServer.dto.gamer.*;
 import com.example.myHorseServer.model.Gamer;
 import com.example.myHorseServer.security.JwtTokenUtil;
 import com.example.myHorseServer.service.GamerService;
-import com.example.myHorseServer.dto.gamer.GamerLoginDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +33,10 @@ public class Controller {
     public ResponseEntity<?> username(@AuthenticationPrincipal Gamer gamer) {
         return ResponseEntity.ok().body(new LoginDto(gamer.getUsername()));
     }
+    @GetMapping(value="/getuser")
+        public ResponseEntity<?> usergetter(@AuthenticationPrincipal Gamer gamer){
+            return new ResponseEntity<>(gamer, HttpStatus.OK) ;
+        }
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> loginGamer(@RequestBody GamerLoginDto dto){
@@ -54,7 +58,77 @@ public class Controller {
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
 
+    //change
 
+    @PutMapping(value = "/gamer/changerole")
+    public ResponseEntity<?> changeRole(@RequestBody ChangeGamerRole role){
+        System.out.println("Change gamer role");
+        gamerService.changeRole(role);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value="/gamer/changeinformation")
+    public ResponseEntity<?> changeInformationGame(@RequestBody ChangeInformationGame information){
+        System.out.println("Change game information  -> login, logout");
+        gamerService.changeInformationGame(information);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value="/gamer/changepoints")
+    public ResponseEntity<?> changePoints(@RequestBody ChangePointsDto points){
+        System.out.println("hange game information -> points");
+        gamerService.changePoints(points);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value="/gamer/changeposition")
+    public ResponseEntity<?> changeGamerPosition(@RequestBody ChangeGamerPosition position){
+        System.out.println("hange game information -> login, logout");
+        gamerService.changeGamerPosition(position);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/gamer/changedata")
+    public ResponseEntity<?> changeData(@RequestBody ChangeDataDto dto){
+        System.out.println("Change gamer datas");
+        gamerService.changeData(dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/gamer/changepassword")
+    public ResponseEntity<?> chanePassword(@RequestBody ChangePasswordDto dto){
+        System.out.println("Change password");
+        gamerService.changePassword(dto);
+        return ResponseEntity.ok().build();
+    }
+
+    //delete user
+
+    @DeleteMapping(value = "/deleteuser/{email}")
+    public ResponseEntity<GamerDeleteResponse> deleteUser(@AuthenticationPrincipal Gamer gamer, @PathVariable String email) {
+        if(gamer.getRole().getRoleName().equalsIgnoreCase("admin")) {
+            return ResponseEntity.ok(gamerService.delete(email));
+        }
+        return ResponseEntity.badRequest().body(new GamerDeleteResponse(null, "Error"));
+    }
+
+    //register
+
+    @CrossOrigin
+    @PostMapping(value = "/register")
+    public ResponseEntity<GamerRegisterResponse> registerRegister(@RequestBody GamerRegisterDto gamerRegisterDto) {
+        GamerRegisterResponse registrationResponse = gamerService.register(gamerRegisterDto);
+
+        System.out.println("--- User registration");
+
+        if (registrationResponse.getMessage().equals("Registration SUCCESSFULL")) {
+            return new ResponseEntity<>(registrationResponse, HttpStatus.OK);
+        } else if (registrationResponse.getMessage().equals("REGISTRATION FAILED")) {
+            return new ResponseEntity<>(registrationResponse, HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(registrationResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

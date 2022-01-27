@@ -1,18 +1,17 @@
-package com.example.myHorseServer.dto.gamer;
+package com.example.myHorseServer.dto.horse;
 
+import com.example.myHorseServer.model.Breed;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-//import service.GamerService;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class GamerEditResponse {
-    //private GamerDataDto gamer;
+public class BreedResponse {
+    private Breed breed;
     private String message;
-    //private GamerService.Edit_Status editStatus;
 }

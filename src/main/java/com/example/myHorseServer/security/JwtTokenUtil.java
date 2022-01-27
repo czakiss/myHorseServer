@@ -3,7 +3,6 @@ package com.example.myHorseServer.security;
 import com.example.myHorseServer.model.Gamer;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -17,7 +16,7 @@ public class JwtTokenUtil {
 
     public String generateAccessToken(Gamer user) {
         return Jwts.builder()
-                .setSubject(String.format("%s,%s", user.getGamerId(), user.getEmail()))
+                .setSubject(String.format("%s,%s", user.getGamerId(), user.getGamerEmail()))
                 .setIssuer(jwtIssuer)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000)) // 1 week

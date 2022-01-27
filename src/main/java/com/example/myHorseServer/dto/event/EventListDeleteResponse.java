@@ -1,18 +1,17 @@
-package com.example.myHorseServer.dto.gamer;
+package com.example.myHorseServer.dto.event;
 
-
+import com.example.myHorseServer.model.EventList;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class GamerBlockResponse {
-    //private GamerDataDto gamer;
+public class EventListDeleteResponse {
+    private EventList eventList;
     private String message;
-    //private GamerService.Block_Status blockStatus;
 }

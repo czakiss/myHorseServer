@@ -1,7 +1,7 @@
 package com.example.myHorseServer.dto.horse;
 
 public enum HorseBreed {
-    FRISIAN_HORSE,
+    FRIESIAN_HORSE,
     ARABIAN_HORSE,
     PONY,
     FIRESIAN,

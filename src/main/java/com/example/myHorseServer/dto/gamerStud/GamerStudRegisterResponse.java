@@ -1,5 +1,6 @@
 package com.example.myHorseServer.dto.gamerStud;
 
+import com.example.myHorseServer.model.GamerStud;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class GamerStudGet {
-    private Integer gamerId;
-    private Integer horseId;
+public class GamerStudRegisterResponse {
+    private GamerStud gamerStudData;
+    private String message;
 }

@@ -1,18 +1,17 @@
 package com.example.myHorseServer.dto.event;
+
+import com.example.myHorseServer.model.EventType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Event {
-    private Integer eventId;
+public class EventTypeDeleteResponse {
     private EventType eventType;
-    private Date date;
+    private String message;
 }

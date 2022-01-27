@@ -1,9 +1,6 @@
 package com.example.myHorseServer.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,18 +10,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "gamer_stud")
-
+@ToString
 public class GamerStud {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name="gamerStudId", nullable = false, unique=true)
+    @Column(name="gamer_stud_id", nullable = false, unique=true)
     private  Integer gamerStudId;
 
     @OneToOne
-    @JoinColumn(name = "gamerId")
-    private Gamer gamer;
+    @JoinColumn(name = "gamer_id")
+    private Gamer gamerId;
 
     @Column(name="name", nullable = false)
-    private String name;
+    private String gamerStudName;
 
 }

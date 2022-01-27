@@ -1,11 +1,11 @@
 package com.example.myHorseServer.dto.gamer;
 
-//import dto.gamer.GamerDataDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-//import service.GamerService;
+
 
 @Getter
 @Setter
@@ -13,7 +13,15 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class GamerRegisterResponse {
-    //private GamerDataDto gamer;
+    private GamerDataDto gamer;
     private String message;
-    //private GamerService.Register_Response registerResponse;
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof GamerRegisterResponse){
+            GamerRegisterResponse other = (GamerRegisterResponse) o;
+            return message.equals(other.message) && gamer.equals(other.gamer);
+        }
+        return false;
+    }
 }

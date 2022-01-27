@@ -10,7 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class GamerBlockDto {
-    private String email;
-    private String nickname;
+public class ChangePointsDto {
+    private String emial;
+    private Integer points;
+    private Integer newPoints;
 }

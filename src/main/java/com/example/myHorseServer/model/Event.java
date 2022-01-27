@@ -15,15 +15,16 @@ import java.util.Date;
 @Entity
 @Table(name = "event")
 
-public class Event {
+public class Event{
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name="eventId", nullable = false, unique=true)
+    @Column(name="event_id", nullable = false, unique=true)
     private Integer eventId;
 
-    @Column(name="eventType", nullable = false)
-    private Integer eventType;
+    @ManyToOne
+    @JoinColumn(name = "event_type")
+    private EventType eventType;
 
     @Column(name="date", nullable = false)
     private Date date;
