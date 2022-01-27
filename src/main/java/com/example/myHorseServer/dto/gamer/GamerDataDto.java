@@ -2,6 +2,7 @@ package com.example.myHorseServer.dto.gamer;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -24,4 +25,18 @@ public class GamerDataDto {
     private String gamerEmail;
     private String password;
 
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof GamerDataDto){
+            GamerDataDto other = (GamerDataDto) o;
+            return Objects.equals(gamerId,other.gamerId) && Objects.equals(nickname,other.nickname)
+                    && Objects.equals(points,other.points) && Objects.equals(lastLogin,other.lastLogin)
+                    && Objects.equals(lastLogout,other.lastLogout) && Objects.equals(spendTime,other.spendTime)
+                    && loc_x==(other.loc_x) && loc_y==(other.loc_y)
+                    && loc_z==(other.loc_z) && Objects.equals(gamerEmail,other.gamerEmail)
+                    && Objects.equals(password,other.password) ;
+        }
+        return false;
+    }
 }
