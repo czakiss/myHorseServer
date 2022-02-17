@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,7 +15,7 @@ import lombok.Setter;
 
 public class EventList {
     private Integer eventListId;
-    private Horse horse;
+    private List<Horse> horse;
     private Event event;
 
 }

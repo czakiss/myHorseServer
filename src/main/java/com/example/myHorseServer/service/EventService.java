@@ -111,8 +111,6 @@ public class EventService {
         return  eventListRepository.findAllByGamerId(gamerListId);
     }
 
-
-
     public Event findEventById(Integer eventId){
         return eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(format("Event with id - %s, not found", eventId))
         );
