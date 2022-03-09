@@ -20,7 +20,7 @@ public class Horse {
     private Breed breed; // rasa konia
     private double fast; // szybkość konia
     private double hungry; // głód konia
-    private Integer thirst; // pragnienie konia
+    private double thirst; // pragnienie konia
     private double appearance;
     private double value;
 

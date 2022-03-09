@@ -37,7 +37,7 @@ public class Horse {
     private double hungry; // głód konia
 
     @Column(name="thirst", nullable = false)
-    private Integer thirst; // pragnienie konia
+    private double thirst; // pragnienie konia
 
     @Column(name="appearance", nullable = false)
     private double appearance;

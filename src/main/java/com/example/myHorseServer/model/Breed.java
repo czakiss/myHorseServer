@@ -26,18 +26,18 @@ public class Breed {
     @Column(name="horse_breed", nullable = false)
     private HorseBreed horseBreed;
 
-    @Column(name="fast", nullable = false)
+    @Column(name="breed_fast", nullable = false)
     private double fast;
 
-    @Column(name="hungry", nullable = false)
-    private Integer hungry;
+    @Column(name="breed_hungry", nullable = false)
+    private double hungry;
 
-    @Column(name="thirst", nullable = false)
-    private Integer thirst;
+    @Column(name="breed_thirst", nullable = false)
+    private double thirst;
 
-    @Column(name="appearance", nullable = false)
+    @Column(name="breed_appearance", nullable = false)
     private double appearance;
 
-    @Column(name="value", nullable = false)
+    @Column(name="breed_value", nullable = false)
     private double value;
 }

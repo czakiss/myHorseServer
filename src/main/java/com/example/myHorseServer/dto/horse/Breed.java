@@ -13,8 +13,8 @@ public class Breed {
     private Integer breedId;
     private HorseBreed horseBreed;
     private double fast;
-    private Integer hungry;
-    private Integer thirst;
+    private double hungry;
+    private double thirst;
     private double appearance;
     private double value;
 }

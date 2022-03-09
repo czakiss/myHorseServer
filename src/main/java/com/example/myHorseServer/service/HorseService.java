@@ -86,7 +86,7 @@ public class HorseService {
                if (horseChange.getFast() != horse.getHorseId()){
                     horse.setFast(horseChange.getFast());
                }else throw new NoChangeException("No change in fast");
-               if(horseChange.getThirst() != null && !horseChange.getThirst().equals(horse.getThirst())){
+               if(horseChange.getThirst() != 0 && horseChange.getThirst() != horse.getThirst()){ //TODO: testnac to
                     horse.setThirst(horseChange.getThirst());
                }else throw new NoChangeException("No change in thirsty");
                if(horseChange.getAppearance()!= 0 && horseChange.getAppearance()!=horse.getAppearance()){

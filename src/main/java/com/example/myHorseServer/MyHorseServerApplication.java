@@ -11,6 +11,6 @@ public class MyHorseServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MyHorseServerApplication.class, args);
 	}
-	//.
+
 
 }

@@ -1,10 +1,8 @@
 package com.example.myHorseServer.model;
 
-import com.example.myHorseServer.dto.gamer.GamerDataDto;
-import lombok.*;
 
+import lombok.*;
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -29,6 +27,6 @@ public class GamerEquipment {
 
     @OneToMany
     @JoinColumn(name = "gamer_id")
-    private Set<Gamer> gamerId = new TreeSet<>();
+    private Set<Gamer> gamerId;
 }
 
