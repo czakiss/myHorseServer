@@ -71,7 +71,7 @@ public class Controller {
 
     @PutMapping(value="/gamer/changepoints")
     public ResponseEntity<?> changePoints(@RequestBody ChangePointsDto points){
-        System.out.println("hange game information -> points");
+        System.out.println("change game information -> points");
         gamerService.changePoints(points);
         return ResponseEntity.ok().build();
     }

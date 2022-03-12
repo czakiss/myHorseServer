@@ -13,5 +13,4 @@ import lombok.Setter;
 public class ChangePointsDto {
     private String emial;
     private Integer points;
-    private Integer newPoints;
 }

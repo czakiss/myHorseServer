@@ -87,8 +87,8 @@ public class GamerService implements UserDetailsService {
 
     public void changePoints(ChangePointsDto points){
         Gamer gamer = gamerRepository.findByGamerEmail(points.getEmial()).orElseThrow(()-> new NotFoundException());
-        if(!points.getNewPoints().equals(points.getPoints())){
-            gamer.setPoints(gamer.getPoints()+points.getNewPoints());
+        if(!points.getPoints().equals(gamer.getPoints())){
+            gamer.setPoints(gamer.getPoints()+points.getPoints());
             gamerRepository.save(gamer);
         }else throw new RuntimeException("Points unchanged");
     }
