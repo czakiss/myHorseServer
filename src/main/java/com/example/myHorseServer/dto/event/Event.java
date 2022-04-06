@@ -16,3 +16,29 @@ public class Event {
     private EventType eventType;
     private Date date;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

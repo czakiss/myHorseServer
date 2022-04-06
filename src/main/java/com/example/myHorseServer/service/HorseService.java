@@ -4,11 +4,16 @@ import com.example.myHorseServer.dto.horse.*;
 import com.example.myHorseServer.exception.NoChangeException;
 import com.example.myHorseServer.exception.NotFoundException;
 import com.example.myHorseServer.model.Breed;
+import com.example.myHorseServer.model.Gamer;
 import com.example.myHorseServer.model.Horse;
 import com.example.myHorseServer.repository.BreedRepository;
+import com.example.myHorseServer.repository.GamerStudRepository;
 import com.example.myHorseServer.repository.HorseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 
@@ -20,13 +25,31 @@ public class HorseService {
     @Autowired
     private BreedRepository breedRepository;
 
-    public HorseResponse createNewHorse(Horse horse){
+    @Autowired
+    private GamerStudRepository gamerStudRepository;
+
+    public HorseResponse createNewHorse(Horse horse, Gamer gamer){
         Horse creator = new Horse();
         creator.setAppearance(horse.getAppearance());
         creator.setBreed(horse.getBreed());
         creator.setFast(horse.getFast());
         creator.setGamerStud(horse.getGamerStud());
         creator.setHungry(horse.getHungry());
+
+        if(horse.getName().isEmpty()){
+            List<Horse> horseList= new ArrayList<Horse>();
+            int number = 0;
+            findAll().forEach(horse1 ->{
+                if(horse1.getGamerStud().equals(gamerStudRepository.findByGamerId(gamer.getGamerId()))){
+                    horseList.add(horse);
+                }
+            });
+            for(int i = 0; i <= horseList.size(); i++){
+                number++;
+                System.out.println("Number if horse in gamer stud is: " + number);
+            }
+            creator.setName("horse" + number);
+        }
         creator.setName(horse.getName());
         creator.setThirst(horse.getThirst());
         creator.setValue(horse.getValue());

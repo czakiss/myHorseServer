@@ -67,7 +67,7 @@ public class HorseController {
     @CrossOrigin
     @PostMapping(value = "/newhorse")
     public ResponseEntity<HorseResponse> createNewHorse(@AuthenticationPrincipal Gamer gamer, @RequestBody Horse horse){
-        HorseResponse horseResponse = horseService.createNewHorse(horse);
+        HorseResponse horseResponse = horseService.createNewHorse(horse,gamer);
         System.out.println("--- New event created ---");
         if(gamer.getRole().getRoleName().equalsIgnoreCase("admin")) {
             if (horseResponse.getMessage().equals("Create new horse")) {

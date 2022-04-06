@@ -15,5 +15,5 @@ public interface GamerStudRepository extends JpaRepository<GamerStud, Integer> {
     Optional<GamerStud> findByGamerStudId(Integer gamerStudId);
 
     @Cacheable
-    Optional<GamerStud> findByGamerStudName(String gamerStudName);
+    Optional<GamerStud> findByGamerId(Integer gamerId);
 }
