@@ -15,9 +15,10 @@ import lombok.Setter;
 
 public class Horse {
     private Integer horseId;
-    private GamerStud gamerStud;
+    private String bukkitHorseId;
+    private GamerStud gamerStudId;
     private String name; // imie konia
-    private Breed breed; // rasa konia
+    private Breed breedId; // rasa konia
     private double fast; // szybkość konia
     private double hungry; // głód konia
     private double thirst; // pragnienie konia

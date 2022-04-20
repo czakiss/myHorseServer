@@ -22,6 +22,6 @@ public class GamerStud {
     private Gamer gamerId;
 
     @Column(name="name", nullable = false)
-    private String gamerStudName;
+    private String name;
 
 }

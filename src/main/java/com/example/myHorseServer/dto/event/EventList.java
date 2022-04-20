@@ -1,12 +1,11 @@
 package com.example.myHorseServer.dto.event;
 
-import com.example.myHorseServer.model.Horse;
+import com.example.myHorseServer.dto.horse.Horse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class EventList {
     private Integer eventListId;
-    private List<Horse> horse;
     private Event event;
-
+    private Integer gamerId;
+    private Horse horse;
 }

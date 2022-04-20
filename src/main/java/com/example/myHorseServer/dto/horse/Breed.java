@@ -1,4 +1,5 @@
 package com.example.myHorseServer.dto.horse;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

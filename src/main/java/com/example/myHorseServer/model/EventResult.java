@@ -21,14 +21,19 @@ public class EventResult {
     @Column(name="event_result_id", nullable = false, unique=true)
     private Integer eventResultId;
 
-    @OneToOne
-    @JoinColumn(name = "event")
-    private Event eventId;
-
     @ManyToOne
+    @JoinColumn(name = "horse_id")
     private Horse horseId;
 
     @Column(name="points_scored", nullable = false)
     private Integer pointsScored;
+
+    @OneToOne
+    @JoinColumn(name = "event")
+    private Event eventId;
+
+
+
+
 
 }

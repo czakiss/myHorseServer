@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(email -> gamerRepository
-                .findByGamerEmail(email)
+                .findByEmail(email)
                 .orElseThrow(
                         () -> new UsernameNotFoundException(
                                 format("User: %s, not found", email)

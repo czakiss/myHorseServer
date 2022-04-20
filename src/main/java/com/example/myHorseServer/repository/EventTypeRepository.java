@@ -15,5 +15,5 @@ public interface EventTypeRepository extends JpaRepository<EventType, Integer> {
     Optional<EventType> findByEventTypeId(Integer eventTypeId);
 
     @Cacheable
-    Optional<EventType> findByEventTypeName(String eventTypeName);
+    Optional<EventType> findByName(String eventTypeName);
 }

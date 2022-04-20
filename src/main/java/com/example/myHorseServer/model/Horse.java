@@ -20,14 +20,15 @@ public class Horse {
     @Column(name="horse_id", nullable = false, unique=true)
     private Integer horseId;
 
-    @ManyToOne
-    private GamerStud gamerStud;
+
+    @Column(name = "bukkit_horse_id")
+    private String bukkitHorseId; // rasa konia
 
     @Column(name="name", nullable = false)
     private String name; // imie konia
 
     @OneToOne
-    @JoinColumn(name = "breedId")
+    @JoinColumn(name = "breed_id")
     private Breed breed; // rasa konia
 
     @Column(name="fast", nullable = false)
@@ -44,5 +45,8 @@ public class Horse {
 
     @Column(name="value", nullable = false)
     private double value;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "gamer_stud_id")
+    private GamerStud gamerStud;
 }
