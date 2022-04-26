@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
-//@RequestMapping("/api")
 @RequiredArgsConstructor
 public class Controller {
 
@@ -41,7 +40,6 @@ public class Controller {
     @PostMapping(value = "/login")
     public ResponseEntity<?> loginGamer(@RequestBody GamerLoginDto dto){
         System.out.println("logowanie");
-
         try {
             Authentication authenticate = authenticationManager
                     .authenticate(
@@ -49,18 +47,13 @@ public class Controller {
                                     dto.getEmail(), dto.getPassword()
                             )
                     );
-
             Gamer gamer = (Gamer) authenticate.getPrincipal();
-
             String token = jwtTokenUtil.generateAccessToken(gamer);
-
             return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, token).body(new LoginDto(token));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-
-    //change
 
     @PutMapping(value = "/gamer/changerole")
     public ResponseEntity<?> changeRole(@RequestBody ChangeGamerRole role){
@@ -78,7 +71,7 @@ public class Controller {
 
     @PutMapping(value="/gamer/changepoints")
     public ResponseEntity<?> changePoints(@RequestBody ChangePointsDto points){
-        System.out.println("hange game information -> points");
+        System.out.println("change game information -> points");
         gamerService.changePoints(points);
         return ResponseEntity.ok().build();
     }
@@ -113,8 +106,6 @@ public class Controller {
         }
         return ResponseEntity.badRequest().body(new GamerDeleteResponse(null, "Error"));
     }
-
-    //register
 
     @CrossOrigin
     @PostMapping(value = "/register")

@@ -4,11 +4,16 @@ import com.example.myHorseServer.dto.horse.*;
 import com.example.myHorseServer.exception.NoChangeException;
 import com.example.myHorseServer.exception.NotFoundException;
 import com.example.myHorseServer.model.Breed;
+import com.example.myHorseServer.model.Gamer;
 import com.example.myHorseServer.model.Horse;
 import com.example.myHorseServer.repository.BreedRepository;
+import com.example.myHorseServer.repository.GamerStudRepository;
 import com.example.myHorseServer.repository.HorseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 
@@ -20,29 +25,48 @@ public class HorseService {
     @Autowired
     private BreedRepository breedRepository;
 
-    public HorseResponse createNewHorse(Horse horse){
+    @Autowired
+    private GamerStudRepository gamerStudRepository;
+
+    public HorseResponse createNewHorse(Horse horse, Gamer gamer){
         Horse creator = new Horse();
         creator.setAppearance(horse.getAppearance());
         creator.setBreed(horse.getBreed());
         creator.setFast(horse.getFast());
         creator.setGamerStud(horse.getGamerStud());
         creator.setHungry(horse.getHungry());
-        creator.setName(horse.getName());
+
+        if(horse.getName().isEmpty()){
+            List<Horse> horseList= new ArrayList<Horse>();
+            int number = 0;
+            findAll().forEach(horse1 ->{
+                if(horse1.getGamerStud().equals(gamerStudRepository.findByGamerId(gamer.getGamerId()))){
+                    horseList.add(horse);
+                }
+            });
+            for(int i = 0; i <= horseList.size(); i++){
+                number++;
+                System.out.println("Number if horse in gamer stud is: " + number);
+            }
+            creator.setName("horse" + number);
+        } else creator.setName(horse.getName());
+
         creator.setThirst(horse.getThirst());
         creator.setValue(horse.getValue());
         creator = horseRepository.save(creator);
 
         return new HorseResponse(new Horse(
                 creator.getHorseId(),
-                creator.getGamerStud(),
+                creator.getBukkitHorseId(),
                 creator.getName(),
                 creator.getBreed(),
                 creator.getFast(),
                 creator.getHungry(),
                 creator.getThirst(),
                 creator.getAppearance(),
-                creator.getValue()
-        ),"Create new horse");
+                creator.getValue(),
+                creator.getGamerStud()
+                ),"Create new horse");
     }
 
     public BreedResponse createNewBreed(Breed breed){
@@ -86,7 +110,7 @@ public class HorseService {
                if (horseChange.getFast() != horse.getHorseId()){
                     horse.setFast(horseChange.getFast());
                }else throw new NoChangeException("No change in fast");
-               if(horseChange.getThirst() != null && !horseChange.getThirst().equals(horse.getThirst())){
+               if(horseChange.getThirst() != 0 && horseChange.getThirst() != horse.getThirst()){ //TODO: testnac to
                     horse.setThirst(horseChange.getThirst());
                }else throw new NoChangeException("No change in thirsty");
                if(horseChange.getAppearance()!= 0 && horseChange.getAppearance()!=horse.getAppearance()){
@@ -130,15 +154,16 @@ public class HorseService {
         horseRepository.deleteById(horse.getHorseId());
         return new HorseResponse(new Horse(
                 horse.getHorseId(),
-                horse.getGamerStud(),
+                horse.getBukkitHorseId(),
                 horse.getName(),
                 horse.getBreed(),
                 horse.getFast(),
                 horse.getHungry(),
                 horse.getThirst(),
                 horse.getAppearance(),
-                horse.getValue()
-        ),"Deleted successfull");
+                horse.getValue(),
+                horse.getGamerStud()
+                ),"Deleted successfull");
     }
 
     public BreedDeleteResponse deleteBreed(Integer breedId){

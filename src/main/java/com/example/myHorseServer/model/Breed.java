@@ -30,14 +30,16 @@ public class Breed {
     private double fast;
 
     @Column(name="hungry", nullable = false)
-    private Integer hungry;
+    private double hungry;
 
     @Column(name="thirst", nullable = false)
-    private Integer thirst;
+    private double thirst;
 
     @Column(name="appearance", nullable = false)
     private double appearance;
 
     @Column(name="value", nullable = false)
     private double value;
+
+
 }

@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface GamerRepository extends JpaRepository<Gamer,Integer> {
 
     @Cacheable
-    Optional<Gamer> findByGamerEmail(String gamerEmail);
+    Optional<Gamer> findByEmail(String email);
 }

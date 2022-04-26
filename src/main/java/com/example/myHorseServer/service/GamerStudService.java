@@ -20,15 +20,15 @@ public class GamerStudService {
     private GamerRepository gamerRepository;
 
     public GamerStudRegisterResponse gamerStudNew(GamerStud gamerStud){
-        if(gamerRepository.findByGamerEmail(gamerStud.getGamerId().getGamerEmail()).isPresent()){
+        if(gamerRepository.findByEmail(gamerStud.getGamerId().getEmail()).isPresent()){
             GamerStud gamerStudNew = new GamerStud();
             gamerStudNew.setGamerId(gamerStud.getGamerId());
-            gamerStudNew.setGamerStudName(gamerStud.getGamerStudName());
+            gamerStudNew.setStudName(gamerStud.getStudName());
             gamerStudNew = gamerStudRepository.save(gamerStudNew);
             return new GamerStudRegisterResponse(new GamerStud(
                     gamerStudNew.getGamerStudId(),
                     gamerStudNew.getGamerId(),
-                    gamerStudNew.getGamerStudName()
+                    gamerStudNew.getStudName()
             ),"New gamer stud created successfull");
         }return new GamerStudRegisterResponse(null, "Gamer not found");
     }
@@ -50,8 +50,8 @@ public class GamerStudService {
             if(!gamerStudChange.getGamerId().equals(gamerStud.getGamerId()) || gamerStudChange!=null){
                 gamerStud.setGamerId(gamerStudChange.getGamerId());
             }else throw new RuntimeException("Gamer was not found");
-            if(!gamerStudChange.getGamerStudName().equals(gamerStud.getGamerStudName()) || gamerStudChange.getGamerStudName()!=null){
-                gamerStud.setGamerStudName(gamerStudChange.getGamerStudName());
+            if(!gamerStudChange.getStudName().equals(gamerStud.getStudName()) || gamerStudChange.getStudName()!=null){
+                gamerStud.setStudName(gamerStudChange.getStudName());
             }else throw new RuntimeException("Name not change");
         }else throw new RuntimeException("No changes");
         gamerStudRepository.save(gamerStud);
@@ -65,7 +65,7 @@ public class GamerStudService {
         return new GamerStudDeleteResponse(new GamerStud(
                 gamerStudDelete.getGamerStudId(),
                 gamerStudDelete.getGamerId(),
-                gamerStudDelete.getGamerStudName()
+                gamerStudDelete.getStudName()
         ),"Deleted successfull");
 
     }

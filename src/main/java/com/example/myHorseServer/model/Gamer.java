@@ -23,6 +23,9 @@ public class Gamer implements UserDetails, Serializable {
     @Column(name="gamer_id", nullable = false, unique=true)
     private Integer gamerId;
 
+    @Column(name="authme_id", nullable = true)
+    private String authmeId;
+
     @Column(name="nickname", nullable = false)
     private String nickname;
 
@@ -52,7 +55,7 @@ public class Gamer implements UserDetails, Serializable {
     private double loc_z;
 
     @Column(name="email", nullable = false)
-    private String gamerEmail;
+    private String email;
 
     @Column(name="password", nullable = false)
     private String password;

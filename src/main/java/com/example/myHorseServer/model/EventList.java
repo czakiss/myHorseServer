@@ -19,13 +19,13 @@ public class EventList {
     @Column(name="event_list_id", nullable = false, unique=true)
     private Integer eventListId;
 
+    @ManyToOne
+    @JoinColumn(name = "event", nullable = false)
+    private Event event;
+
     @OneToOne
     @JoinColumn(name = "horse_id")
     private Horse horse;
-
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
 
     @Column(name="gamer_id")
     private Integer gamer;

@@ -44,9 +44,11 @@ public class GamerStudController {
         }
         return ResponseEntity.badRequest().body(new GamerStudDeleteResponse(null, "Forbidden"));
     }
+
     @CrossOrigin
     @PostMapping(value = "/newstud")
-    public ResponseEntity<GamerStudRegisterResponse> gamerStudNew(@AuthenticationPrincipal Gamer gamer, @RequestBody GamerStud gamerStud){
+    public ResponseEntity<GamerStudRegisterResponse> gamerStudNew(@AuthenticationPrincipal Gamer gamer,
+                                                                  @RequestBody GamerStud gamerStud){
         GamerStudRegisterResponse gamerStudRegisterResponse = gamerStudService.gamerStudNew(gamerStud);
         System.out.println("--- New event created ---");
         if (gamerStudRegisterResponse.getMessage().equals("New gamer stud created successfull")) {

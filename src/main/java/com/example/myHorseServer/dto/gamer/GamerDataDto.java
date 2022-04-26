@@ -1,4 +1,5 @@
 package com.example.myHorseServer.dto.gamer;
+import com.example.myHorseServer.model.Role;
 import lombok.*;
 
 import java.util.Date;
@@ -12,17 +13,17 @@ import java.util.Objects;
 
 public class GamerDataDto {
     private Integer gamerId;
+    private String authmeId;
     private String nickname;
     private Integer points;
     private Date lastLogin;
     private Date lastLogout;
     private Integer spendTime;
-    //private Role role;
-    //TODO: ustawić role !!!
+    private Role role;
     private double loc_x;
     private double loc_y;
     private double loc_z;
-    private String gamerEmail;
+    private String email;
     private String password;
 
 

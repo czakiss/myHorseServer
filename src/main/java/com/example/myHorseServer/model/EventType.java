@@ -22,7 +22,7 @@ public class EventType {
     private Integer eventTypeId;
 
     @Column(name="name", nullable = false)
-    private String eventTypeName;
+    private String name;
 
     @Column(name="description", nullable = false)
     private String description;

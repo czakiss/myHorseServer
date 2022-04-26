@@ -22,11 +22,17 @@ public class Event{
     @Column(name="event_id", nullable = false, unique=true)
     private Integer eventId;
 
+    @Column(name="date", nullable = false)
+    private Date date;
+
     @ManyToOne
     @JoinColumn(name = "event_type")
     private EventType eventType;
 
-    @Column(name="date", nullable = false)
-    private Date date;
+    @Column(name = "is_end")
+    private boolean isEnd;
+
+
+
 
 }

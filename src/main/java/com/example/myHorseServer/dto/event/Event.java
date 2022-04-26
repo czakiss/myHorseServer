@@ -15,4 +15,31 @@ public class Event {
     private Integer eventId;
     private EventType eventType;
     private Date date;
+    private boolean isEnd;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

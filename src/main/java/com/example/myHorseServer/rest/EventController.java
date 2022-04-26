@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLOutput;
 
 @CrossOrigin("*")
 @RestController
@@ -38,6 +37,7 @@ public class EventController {
     @GetMapping(value = "/results")
     public ResponseEntity<Iterable<EventResult>> getResults(){
         System.out.println("Get types");
+       // eventService.checkStateResultas();
         return new ResponseEntity<Iterable<EventResult>>(eventService.findAllEventResult(), HttpStatus.OK);
     }
     @GetMapping(value="/eventbyid")
@@ -69,11 +69,19 @@ public class EventController {
         return new ResponseEntity<>(eventService.findAllOfEventList(eventListId), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/alleventlist")
+    public ResponseEntity<Iterable<EventList>> getbyEventListId(@AuthenticationPrincipal Gamer gamer){
+        System.out.println("Get All Event List ");
+
+        return new ResponseEntity<Iterable<EventList>>(eventService.findAllEventList(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/get/eventlistgamer")
     public ResponseEntity<Iterable<EventList>> getEventList(@AuthenticationPrincipal Gamer gamer){
         System.out.println("Get event list by ID");
         return new ResponseEntity<Iterable<EventList>>(eventService.findAllGamerEventList(gamer.getGamerId()), HttpStatus.OK);
     }
+
 
     @PutMapping(value = "/change/event" )
     public ResponseEntity<?> changeEvent(@AuthenticationPrincipal Gamer gamer,@RequestBody Event event){
