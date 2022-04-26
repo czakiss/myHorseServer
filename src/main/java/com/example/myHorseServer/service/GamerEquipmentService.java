@@ -16,12 +16,13 @@ public class GamerEquipmentService {
     private GamerEquipmentRepository gamerEquipmentRepository;
 
     public GamerEquipment createEqiupment(GamerEquipment gamerEquipment){
+        System.out.println("Sprawdzamy: " + gamerEquipment.getGamerId()+ " next: " + gamerEquipment.getIdItem() + "next: " + gamerEquipment.getEquipmentId());
         GamerEquipment creator = new GamerEquipment();
         creator.setIdItem(gamerEquipment.getIdItem());
         creator.setGamerId(gamerEquipment.getGamerId());
+        gamerEquipmentRepository.save(creator);
 
-        System.out.println("stworzono nowy przedmiot !!!!!!!!!!");
-        System.out.println(creator.getEquipmentId()+ " " + creator.getGamerId()+ " " + creator.getGamerId());
+
         return new GamerEquipment(
                 creator.getEquipmentId(),
                 creator.getIdItem(),

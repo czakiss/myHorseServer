@@ -64,7 +64,7 @@ public class GamerEquipmentController {
     }
     @CrossOrigin
     @PostMapping(value = "/new/item")
-    public ResponseEntity<GamerEquipment> createEvent(@AuthenticationPrincipal Gamer gamer, @RequestBody GamerEquipment gamerEquipment){
+    public ResponseEntity createEvent(@AuthenticationPrincipal Gamer gamer, @RequestBody GamerEquipment gamerEquipment){
         System.out.println("--- New event created ---");
         if(gamer.getRole().getRoleName().equalsIgnoreCase("admin")) {
            return ResponseEntity.ok(gamerEquipmentService.createEqiupment(gamerEquipment));
