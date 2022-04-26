@@ -21,8 +21,7 @@ public class Plot {
     @Column(name="plot_id", nullable = false, unique=true)
     private Integer plotId;
 
-    @OneToOne
-    @JoinColumn(name = "gamer_id")
+    @Column(name = "gamer_id")
     private Gamer gamer;
 
     @Column(name="x", nullable = false)

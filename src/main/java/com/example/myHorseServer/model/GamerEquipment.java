@@ -25,8 +25,8 @@ public class GamerEquipment {
     @JoinColumn(name = "id_item")
     private Store idItem;
 
-    @OneToMany
-    @JoinColumn(name = "gamer_id")
-    private Set<Gamer> gamerId;
+
+    @Column(name = "gamer_id")
+    private Gamer gamerId;
 }
 

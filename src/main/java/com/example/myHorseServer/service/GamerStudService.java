@@ -23,12 +23,12 @@ public class GamerStudService {
         if(gamerRepository.findByEmail(gamerStud.getGamerId().getEmail()).isPresent()){
             GamerStud gamerStudNew = new GamerStud();
             gamerStudNew.setGamerId(gamerStud.getGamerId());
-            gamerStudNew.setName(gamerStud.getName());
+            gamerStudNew.setStudName(gamerStud.getStudName());
             gamerStudNew = gamerStudRepository.save(gamerStudNew);
             return new GamerStudRegisterResponse(new GamerStud(
                     gamerStudNew.getGamerStudId(),
                     gamerStudNew.getGamerId(),
-                    gamerStudNew.getName()
+                    gamerStudNew.getStudName()
             ),"New gamer stud created successfull");
         }return new GamerStudRegisterResponse(null, "Gamer not found");
     }
@@ -50,8 +50,8 @@ public class GamerStudService {
             if(!gamerStudChange.getGamerId().equals(gamerStud.getGamerId()) || gamerStudChange!=null){
                 gamerStud.setGamerId(gamerStudChange.getGamerId());
             }else throw new RuntimeException("Gamer was not found");
-            if(!gamerStudChange.getName().equals(gamerStud.getName()) || gamerStudChange.getName()!=null){
-                gamerStud.setName(gamerStudChange.getName());
+            if(!gamerStudChange.getStudName().equals(gamerStud.getStudName()) || gamerStudChange.getStudName()!=null){
+                gamerStud.setStudName(gamerStudChange.getStudName());
             }else throw new RuntimeException("Name not change");
         }else throw new RuntimeException("No changes");
         gamerStudRepository.save(gamerStud);
@@ -65,7 +65,7 @@ public class GamerStudService {
         return new GamerStudDeleteResponse(new GamerStud(
                 gamerStudDelete.getGamerStudId(),
                 gamerStudDelete.getGamerId(),
-                gamerStudDelete.getName()
+                gamerStudDelete.getStudName()
         ),"Deleted successfull");
 
     }

@@ -1,18 +1,27 @@
 package com.example.myHorseServer.service;
 
 
+import ch.qos.logback.classic.pattern.DateConverter;
 import com.example.myHorseServer.dto.event.*;
+import com.example.myHorseServer.dto.gamer.ChangePointsDto;
 import com.example.myHorseServer.exception.EventNotFoundException;
+import com.example.myHorseServer.model.*;
 import com.example.myHorseServer.model.Event;
 import com.example.myHorseServer.model.EventList;
 import com.example.myHorseServer.model.EventResult;
 import com.example.myHorseServer.model.EventType;
-import com.example.myHorseServer.repository.EventListRepository;
-import com.example.myHorseServer.repository.EventRepository;
-import com.example.myHorseServer.repository.EventResultRepository;
-import com.example.myHorseServer.repository.EventTypeRepository;
+import com.example.myHorseServer.repository.*;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import javax.xml.bind.DatatypeConverter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import static java.lang.String.format;
 
@@ -32,6 +41,18 @@ public class EventService {
     @Autowired
     private EventListRepository eventListRepository;
 
+    @Autowired
+    private GamerRepository gamerRepository;
+
+    @Autowired
+    private GamerService gamerService;
+
+    @Autowired
+    private EventResultRepositoryWinner eventResultRepositoryWinner;
+
+    @Autowired
+    private HorseRepository horseRepository;
+
 
     public EventCreateResponse createEvent(Event event){
         Event creator = new Event();
@@ -42,7 +63,8 @@ public class EventService {
         return new EventCreateResponse(new Event(
                 creator.getEventId(),
                 creator.getDate(),
-                creator.getEventType()
+                creator.getEventType(),
+                creator.isEnd()
                 ),"Create new event - successfull");
     }
 
@@ -101,11 +123,35 @@ public class EventService {
         return eventResultRepository.findAll();
     }
 
+    @Transactional
+    public void checkStateResultas(int eventId){
+        List<EventWinner> winners = eventResultRepositoryWinner.getWinnersOfEvent(eventId);
+
+        for(EventWinner winner : winners) {
+            //System.out.println("SPRAWDZAMY: " + winner.getEventId()+ " " + winner.getHorseId() + " " + winner.getPointsScored());
+            Event event = eventRepository.getById(winner.getEventId());
+            Horse horse = horseRepository.getById(winner.getHorseId());
+
+            Gamer gamer = horse.getGamerStud().getGamerId();
+            gamer.setPoints(gamer.getPoints() + event.getEventType().getPointsScored());
+            gamerRepository.save(gamer);
+
+            EventResult result = new EventResult();
+            result.setEventId(event);
+            result.setHorseId(horse);
+            result.setPointsScored(winner.getPointsScored());
+            eventResultRepository.save(result);
+        }
+    }
+
     public EventList findAllOfEventList(Integer eventListId){return  eventListRepository.findAllById(eventListId).orElse(null);}
+
+    public Iterable<EventList> findAllEventList(){return eventListRepository.findAll();}
 
     public Iterable<EventList> findAllGamerEventList(Integer gamerListId){
         return  eventListRepository.findAllByGamerId(gamerListId);
     }
+
 
     public Event findEventById(Integer eventId){
         return eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(format("Event with id - %s, not found", eventId))
@@ -176,7 +222,8 @@ public class EventService {
         return new EventDeleteResponse(new Event(
                         eventDelete.getEventId(),
                 eventDelete.getDate(),
-                eventDelete.getEventType()
+                eventDelete.getEventType(),
+                eventDelete.isEnd()
                 ),"Deleted event successfull");
     }
 
@@ -216,4 +263,6 @@ public class EventService {
                 eventListDelete.getGamer()
         ),"Deleted event results successfull");
     }
+
+
 }

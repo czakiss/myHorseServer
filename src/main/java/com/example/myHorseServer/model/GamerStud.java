@@ -21,7 +21,7 @@ public class GamerStud {
     @JoinColumn(name = "gamer_id")
     private Gamer gamerId;
 
-    @Column(name="name", nullable = false)
-    private String name;
+    @Column(name="stud_name", nullable = false)
+    private String studName;
 
 }

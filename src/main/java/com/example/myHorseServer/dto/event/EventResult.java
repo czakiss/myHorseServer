@@ -15,5 +15,5 @@ public class EventResult {
     private Integer eventResultId;
     private Horse horseId;
     private Integer pointsScored;
-    private Event event;
+    private Event eventId;
 }

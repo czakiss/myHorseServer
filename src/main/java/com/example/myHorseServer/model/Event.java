@@ -29,6 +29,10 @@ public class Event{
     @JoinColumn(name = "event_type")
     private EventType eventType;
 
+    @Column(name = "is_end")
+    private boolean isEnd;
+
+
 
 
 }

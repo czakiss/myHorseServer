@@ -29,7 +29,7 @@ public class EventResult {
     private Integer pointsScored;
 
     @OneToOne
-    @JoinColumn(name = "event")
+    @JoinColumn(name = "event_id")
     private Event eventId;
 
 

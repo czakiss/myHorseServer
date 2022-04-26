@@ -20,7 +20,7 @@ public class EventList {
     private Integer eventListId;
 
     @ManyToOne
-    @JoinColumn(name = "event_id")
+    @JoinColumn(name = "event", nullable = false)
     private Event event;
 
     @OneToOne
