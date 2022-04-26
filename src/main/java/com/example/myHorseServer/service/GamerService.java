@@ -5,6 +5,7 @@ import com.example.myHorseServer.exception.NotFoundException;
 import com.example.myHorseServer.model.Gamer;
 import com.example.myHorseServer.repository.GamerRepository;
 import com.example.myHorseServer.repository.RoleRepository;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,16 +19,21 @@ import java.time.LocalDate;
 import static java.lang.String.format;
 
 @Service
+@RequiredArgsConstructor
 public class GamerService implements UserDetailsService {
 
-    @Autowired
-    private GamerRepository gamerRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private final GamerRepository gamerRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+     private final RoleRepository roleRepository;
+
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
+
+
 
     public boolean login(String email, String password) {
         Gamer gto = gamerRepository.findByEmail(email).orElseThrow(() -> new NotFoundException());

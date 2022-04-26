@@ -14,4 +14,13 @@ import lombok.Setter;
 public class GamerDeleteResponse {
     private GamerDataDto gamer;
     private String message;
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof GamerDeleteResponse){
+            GamerDeleteResponse other = (GamerDeleteResponse) o;
+            return message.equals(other.message) && gamer.equals(other.gamer);
+        }
+        return false;
+    }
 }
