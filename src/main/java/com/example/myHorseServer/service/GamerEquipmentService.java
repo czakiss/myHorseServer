@@ -15,16 +15,18 @@ public class GamerEquipmentService {
     @Autowired
     private GamerEquipmentRepository gamerEquipmentRepository;
 
-    public EquipmentCreateResponse createEqiupment(GamerEquipment gamerEquipment){
+    public GamerEquipment createEqiupment(GamerEquipment gamerEquipment){
         GamerEquipment creator = new GamerEquipment();
         creator.setIdItem(gamerEquipment.getIdItem());
         creator.setGamerId(gamerEquipment.getGamerId());
 
-        return new EquipmentCreateResponse(new GamerEquipment(
+        System.out.println("stworzono nowy przedmiot !!!!!!!!!!");
+        System.out.println(creator.getEquipmentId()+ " " + creator.getGamerId()+ " " + creator.getGamerId());
+        return new GamerEquipment(
                 creator.getEquipmentId(),
                 creator.getIdItem(),
                 creator.getGamerId()
-        ),"Create gamer equipment - successful");
+        );
     }
     public Iterable<GamerEquipment> findAllItems(){
 

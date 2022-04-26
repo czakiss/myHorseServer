@@ -3,8 +3,6 @@ package com.example.myHorseServer.model;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.Set;
-import java.util.TreeSet;
 
 
 @Setter
@@ -13,7 +11,7 @@ import java.util.TreeSet;
 @NoArgsConstructor
 @Entity
 @Table(name = "gamer_equipment")
-@ToString
+
 
 public class GamerEquipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +23,8 @@ public class GamerEquipment {
     @JoinColumn(name = "id_item")
     private Store idItem;
 
-
-    @Column(name = "gamer_id")
+    @OneToOne
+    @JoinColumn(name = "gamer_id")
     private Gamer gamerId;
 }
 

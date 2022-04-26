@@ -25,6 +25,8 @@ public class StoreService {
         creator.setValue(store.getValue());
         creator = storeRepository.save(creator);
 
+        System.out.println();
+
         return new StoreCreateResponse(new Store(
                 creator.getIdItem(),
                 creator.getNameItem(),

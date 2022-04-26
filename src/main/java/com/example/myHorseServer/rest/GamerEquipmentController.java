@@ -64,13 +64,10 @@ public class GamerEquipmentController {
     }
     @CrossOrigin
     @PostMapping(value = "/new/item")
-    public ResponseEntity<EquipmentCreateResponse> createEvent(@AuthenticationPrincipal Gamer gamer, @RequestBody GamerEquipment gamerEquipment){
-        EquipmentCreateResponse storeCreateResponse = gamerEquipmentService.createEqiupment(gamerEquipment);
+    public ResponseEntity<GamerEquipment> createEvent(@AuthenticationPrincipal Gamer gamer, @RequestBody GamerEquipment gamerEquipment){
         System.out.println("--- New event created ---");
         if(gamer.getRole().getRoleName().equalsIgnoreCase("admin")) {
-            if (storeCreateResponse.getMessage().equals("Create gamer equipment - successful")) {
-                return new ResponseEntity<>(storeCreateResponse, HttpStatus.OK);
-            } else return new ResponseEntity<>(storeCreateResponse, HttpStatus.BAD_REQUEST);
-        }else return (ResponseEntity<EquipmentCreateResponse>) ResponseEntity.status(HttpStatus.FORBIDDEN);
+           return ResponseEntity.ok(gamerEquipmentService.createEqiupment(gamerEquipment));
+        }else return (ResponseEntity<GamerEquipment>) ResponseEntity.status(HttpStatus.FORBIDDEN);
     }
 }
